@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brent Brooks</title>
+<style>
+/* ============================================================
+   BRENT BROOKS PORTFOLIO — JSON-BASED CMS
+
+   HOW TO EDIT CONTENT:
+   Scroll down to the <script> tag at the bottom of this file.
+   You'll find a SITE_DATA object — edit that JSON to change
+   ANY content on the site: your bio, projects, contact info,
+   colors, etc. No coding knowledge needed beyond basic JSON.
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f0efed;
+  --text: #1a1a1a;
+  --text-secondary: #666;
+  --accent: #1a1a1a;
+  --white: #ffffff;
+  --border: #d4d4d4;
+  --card-bg: #e0dfdd;
+  --max-width: 1140px;
+  --nav-height: 80px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 40px;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* MOBILE NAV */
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; transition: 0.3s; }
+
+/* HERO */
+.hero {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 80px 40px 60px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 40px;
+}
+.hero-bio {
+  max-width: 680px;
+  margin: 0 auto 20px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.hero-cta {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 18px 48px;
+  background: var(--accent);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+.hero-cta:hover { opacity: 0.85; }
+
+/* SECTION TITLES */
+.section-title {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 60px 40px 30px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* PROJECT GRID */
+.projects {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 40px 80px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+.project-card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+.project-info {
+  padding: 20px 24px;
+}
+.project-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.project-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* PROJECT DETAIL MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: 10px;
+  max-width: 800px;
+  width: 100%;
+  margin: 40px auto;
+  overflow: hidden;
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  border-bottom: 1px solid #eee;
+}
+.modal-header h2 { font-size: 22px; font-weight: 700; }
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+.modal-close:hover { color: var(--text); }
+.modal-body { padding: 32px; }
+.modal-body img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+.modal-body p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.modal-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.modal-tags span {
+  padding: 4px 14px;
+  background: var(--bg);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* CONTACT */
+.contact {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+}
+.contact h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.contact-info p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+.contact-info a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.contact-info a:hover { color: var(--text-secondary); }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: inherit;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--text);
+}
+.contact-form textarea { resize: vertical; min-height: 120px; }
+.contact-form button {
+  align-self: flex-start;
+  padding: 14px 40px;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.contact-form button:hover { opacity: 0.85; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 40px;
+  text-align: center;
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-inner span { font-size: 13px; color: var(--text-secondary); }
+.social-links { display: flex; gap: 20px; }
+.social-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.social-links a:hover { color: var(--text); }
+
+/* ADMIN EDIT BUTTON */
+.admin-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 300;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: opacity 0.2s;
+  display: none;
+}
+.admin-btn:hover { opacity: 0.85; }
+.admin-btn.visible { display: block; }
+
+/* ADMIN PANEL */
+.admin-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--white);
+  overflow-y: auto;
+}
+.admin-panel.active { display: block; }
+.admin-header {
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+.admin-header h2 { font-size: 20px; font-weight: 700; }
+.admin-actions { display: flex; gap: 12px; }
+.admin-actions button {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-save { background: var(--accent); color: var(--white); border: none; }
+.btn-cancel { background: none; color: var(--text); border: 1px solid var(--border); }
+.admin-body { padding: 40px; max-width: 900px; margin: 0 auto; }
+.admin-body label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  margin-top: 20px;
+}
+.admin-body label:first-child { margin-top: 0; }
+.admin-body input,
+.admin-body textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.admin-body textarea { min-height: 100px; resize: vertical; }
+.admin-body .json-editor {
+  width: 100%;
+  min-height: 500px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  tab-size: 2;
+}
+.admin-section {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.admin-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    flex-direction: column;
+    padding: 20px 40px 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .hero { padding: 50px 24px 40px; }
+  .hero h1 { font-size: 48px; }
+  .hero-bio { font-size: 16px; }
+  .section-title { padding: 40px 24px 20px; }
+  .projects { grid-template-columns: 1fr; padding: 0 24px 60px; }
+  .contact { padding: 40px 24px 60px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- All content is rendered by JavaScript from the SITE_DATA below -->
+<div id="app"></div>
+
+<script>
+// ================================================================
+//  SITE DATA — EDIT THIS JSON TO UPDATE YOUR ENTIRE SITE
+//  Just change values below and save the file. That's it!
+// ================================================================
+const SITE_DATA = {
+  // ---------- SITE INFO ----------
+  site: {
+    name: "BRENT BROOKS",
+    tagline: "Hello There!",
+    bio: [
+      "I love building engaged and fulfilled teams, leading social & digital campaigns, cultivating a culture of creativity and design thinking. Finding insights, establishing partnerships with stakeholders and peers, building end-user empathy to solve for complex problems wherever I might find them.",
+      "With ample experience as a design leader for both client-side and agency environments creating exceptional experiences for some of the world\u2019s strongest brands."
+    ],
+    ctaText: "VIEW WORK",
+    navLinks: ["Work", "Contact"]
+  },
+
+  // ---------- PROJECTS ----------
+  // To add a new project: copy any object below, paste it, and fill in your info.
+  // To remove a project: delete the entire { ... } block.
+  // "tags" show as pills on the detail modal.
+  // "image" can be a URL or a local relative path (e.g., "images/my-project.jpg").
+  projects: [
+    {
+      title: "Client Portal",
+      category: "Product Design",
+      description: "Financial dashboard and client portal design featuring real-time market data, portfolio performance tracking, and house requirements visualization.",
+      image: "images/client-portal.png",
+      tags: ["Product Design", "UI/UX", "Finance"]
+    },
+    {
+      title: "Project X",
+      category: "Product Design",
+      description: "Trading and investment platform with charting capabilities, price tracking, and portfolio management features.",
+      image: "images/project-x.png",
+      tags: ["Product Design", "Fintech", "UI/UX"]
+    },
+    {
+      title: "Simplified",
+      category: "Product Design",
+      description: "Mobile-first product design focusing on simplified user experiences and intuitive interfaces.",
+      image: "images/simplified.png",
+      tags: ["Mobile", "Product Design"]
+    },
+    {
+      title: "Service Genie",
+      category: "Product Design",
+      description: "Service management application design with focus on user experience and streamlined workflows.",
+      image: "images/service-genie.png",
+      tags: ["Product Design", "Mobile", "UX"]
+    },
+    {
+      title: "HINGE - Design System",
+      category: "Design System",
+      description: "Comprehensive design system creation establishing consistent patterns, components, and guidelines across the product ecosystem.",
+      image: "images/hinge-design-system.png",
+      tags: ["Design System", "UI Components"]
+    },
+    {
+      title: "AIG Individual Retirement",
+      category: "UI/UX",
+      description: "Retirement planning platform design for AIG, focused on helping individuals manage and plan their retirement savings.",
+      image: "images/aig-retirement.png",
+      tags: ["UI/UX", "Finance", "Enterprise"]
+    },
+    {
+      title: "VALIC - Plan Sponsor Administration",
+      category: "UI/UX",
+      description: "Plan sponsor administration portal design for VALIC, enabling efficient management of retirement plan administration.",
+      image: "images/valic.png",
+      tags: ["UI/UX", "Finance", "Enterprise"]
+    },
+    {
+      title: "Private Client Group",
+      category: "UI/UX",
+      description: "High-end client experience design for private wealth management services.",
+      image: "images/private-client-group.png",
+      tags: ["UI/UX", "Finance"]
+    },
+    {
+      title: "Bank of Montreal",
+      category: "UI/UX",
+      description: "Digital banking experience design for Bank of Montreal, modernizing customer-facing interfaces.",
+      image: "images/bank-of-montreal.png",
+      tags: ["UI/UX", "Banking", "Enterprise"]
+    },
+    {
+      title: "American Express Digital Card Experience",
+      category: "UI/UX",
+      description: "Reimagined digital card experience for American Express, enhancing the cardholder journey.",
+      image: "images/amex.png",
+      tags: ["UI/UX", "Finance", "Digital"]
+    },
+    {
+      title: "TimeWarnerCable",
+      category: "Digital Campaign",
+      description: "Digital campaign and experience design for Time Warner Cable.",
+      image: "images/timewarnercable.png",
+      tags: ["Campaign", "Digital"]
+    },
+    {
+      title: "British Airways",
+      category: "Digital Campaign",
+      description: "Digital campaign work for British Airways, creating compelling brand experiences.",
+      image: "images/british-airways.png",
+      tags: ["Campaign", "Social", "Brand"]
+    },
+    {
+      title: "IKEA",
+      category: "Social Campaign",
+      description: "Social media campaign strategy and execution for IKEA.",
+      image: "images/ikea.png",
+      tags: ["Social", "Campaign", "Brand"]
+    },
+    {
+      title: "Castrol",
+      category: "Social Campaign",
+      description: "Social and digital campaign design for Castrol, driving engagement and brand awareness.",
+      image: "images/castrol.png",
+      tags: ["Social", "Campaign"]
+    },
+    {
+      title: "Slimfast",
+      category: "Social Campaign",
+      description: "Social campaign for Slimfast, focused on health and wellness messaging.",
+      image: "images/slimfast.png",
+      tags: ["Social", "Campaign", "Health"]
+    },
+    {
+      title: "Desigual",
+      category: "Social Campaign",
+      description: "Creative campaign for Desigual, blending fashion and digital engagement.",
+      image: "images/desigual.png",
+      tags: ["Social", "Campaign", "Fashion"]
+    },
+    {
+      title: "Various Work",
+      category: "Mixed",
+      description: "A collection of additional design, social, and campaign work across various brands and industries.",
+      image: "images/various.png",
+      tags: ["Design", "Social", "Campaign"]
+    }
+  ],
+
+  // ---------- CONTACT ----------
+  contact: {
+    heading: "Drop Me a Line",
+    email: "me@brentbrooks.com",
+    phone: "+1(917)691-4735",
+    location: "New York, NY",
+    showForm: true
+  },
+
+  // ---------- SOCIAL LINKS ----------
+  social: [
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/brentbrooks/" }
+  ],
+
+  // ---------- FOOTER ----------
+  footer: {
+    copyright: "\u00a9 2026 Brent Brooks. All rights reserved."
+  }
+};
+
+// ================================================================
+//  RENDERING ENGINE — You shouldn't need to edit below this line
+//  (but you can if you want to customize the layout/behavior)
+// ================================================================
+
+function renderSite(data) {
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <!-- NAVIGATION -->
+    <nav>
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" onclick="scrollToTop(); return false;">${data.site.name}</a>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+          ${data.site.navLinks.map(link =>
+            `<a href="#${link.toLowerCase()}" onclick="closeNav()">${link}</a>`
+          ).join('')}
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <h1>${data.site.tagline}</h1>
+      ${data.site.bio.map(p => `<p class="hero-bio">${p}</p>`).join('')}
+      <a href="#work" class="hero-cta">${data.site.ctaText}</a>
+    </section>
+
+    <!-- WORK -->
+    <h2 class="section-title" id="work">Product Design, UI/UX, Social, and Campaign work.</h2>
+    <div class="projects" id="projectGrid"></div>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <h2>${data.contact.heading}</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>Via Email: <a href="mailto:${data.contact.email}">${data.contact.email}</a></p>
+          <p>Cell: ${data.contact.phone}</p>
+          <p>${data.contact.location}</p>
+        </div>
+        ${data.contact.showForm ? `
+        <form class="contact-form" onsubmit="handleContact(event)">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">SEND MESSAGE</button>
+        </form>
+        ` : ''}
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span>${data.footer.copyright}</span>
+        <div class="social-links">
+          ${data.social.map(s => `<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`).join('')}
+        </div>
+      </div>
+    </footer>
+
+    <!-- PROJECT DETAIL MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+      <div class="modal" id="modal"></div>
+    </div>
+
+    <!-- ADMIN EDIT BUTTON (triple-click the footer copyright to reveal) -->
+    <button class="admin-btn" id="adminBtn" onclick="openAdmin()">Edit Content</button>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-panel" id="adminPanel">
+      <div class="admin-header">
+        <h2>Edit Site Content</h2>
+        <div class="admin-actions">
+          <button class="btn-cancel" onclick="closeAdmin()">Cancel</button>
+          <button class="btn-save" onclick="saveAdmin()">Save &amp; Reload</button>
+        </div>
+      </div>
+      <div class="admin-body">
+        <p style="margin-bottom:20px; color: var(--text-secondary); font-size:14px;">
+          Edit the JSON below to change any content on your site. After saving, the page will reload with your changes.
+          <strong>Tip:</strong> To add a new project, copy an existing project block and modify it.
+        </p>
+        <textarea class="json-editor" id="jsonEditor"></textarea>
+      </div>
+    </div>
+  `;
+
+  renderProjects(data.projects);
+}
+
+function renderProjects(projects) {
+  const grid = document.getElementById('projectGrid');
+  grid.innerHTML = projects.map((p, i) => `
+    <div class="project-card" onclick="openProject(${i})">
+      <img class="project-thumb" src="${p.image}" alt="${p.title}" loading="lazy"
+           onerror="this.style.display='none'">
+      <div class="project-info">
+        <h3>${p.title}</h3>
+        <p>${p.category || ''}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// PROJECT MODAL
+function openProject(index) {
+  const p = SITE_DATA.projects[index];
+  const modal = document.getElementById('modal');
+  modal.innerHTML = `
+    <div class="modal-header">
+      <h2>${p.title}</h2>
+      <button class="modal-close" onclick="closeModalBtn()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <img src="${p.image}" alt="${p.title}" onerror="this.style.display='none'">
+      <p>${p.description}</p>
+      ${p.tags ? `
+        <div class="modal-tags">
+          ${p.tags.map(t => `<span>${t}</span>`).join('')}
+        </div>
+      ` : ''}
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === e.currentTarget) {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// NAVIGATION
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+}
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// CONTACT FORM
+function handleContact(e) {
+  e.preventDefault();
+  const form = e.target;
+  const name = form.name.value;
+  alert(`Thanks ${name}! Your message has been received. (Connect a form backend like Formspree to make this work.)`);
+  form.reset();
+}
+
+// ADMIN PANEL (triple-click footer to reveal edit button)
+let clickCount = 0;
+let clickTimer;
+document.addEventListener('click', (e) => {
+  if (e.target.closest('footer')) {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 500);
+    if (clickCount >= 3) {
+      document.getElementById('adminBtn').classList.toggle('visible');
+      clickCount = 0;
+    }
+  }
+});
+
+function openAdmin() {
+  const editor = document.getElementById('jsonEditor');
+  editor.value = JSON.stringify(SITE_DATA, null, 2);
+  document.getElementById('adminPanel').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function saveAdmin() {
+  try {
+    const newData = JSON.parse(document.getElementById('jsonEditor').value);
+    Object.assign(SITE_DATA, newData);
+    closeAdmin();
+    renderSite(SITE_DATA);
+    document.getElementById('adminBtn').classList.remove('visible');
+    alert('Content updated! Note: changes are in-memory only. To make them permanent, update the SITE_DATA in this HTML file.');
+  } catch (err) {
+    alert('Invalid JSON: ' + err.message);
+  }
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModalBtn();
+    closeAdmin();
+  }
+});
+
+// RENDER
+renderSite(SITE_DATA);
+</script>
+</body>
+</html>
