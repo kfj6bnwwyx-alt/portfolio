@@ -1,0 +1,267 @@
+/* ============================================================
+   SITE EFFECTS — scroll reveal, slider, lightbox, hero pan
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+/* ---------- Scroll reveal ---------- */
+.fx-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.fx-reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------- Nav shadow on scroll ---------- */
+nav { transition: box-shadow .25s ease, backdrop-filter .25s ease; }
+nav.is-scrolled {
+  box-shadow: 0 2px 20px rgba(0,0,0,.08);
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+/* ---------- Hero Ken-Burns pan/zoom ---------- */
+.hero-img {
+  overflow: hidden;
+  animation: fxHeroPan 18s ease-in-out infinite alternate;
+  transform-origin: center center;
+}
+@keyframes fxHeroPan {
+  0%   { transform: scale(1)    translate(0, 0); }
+  100% { transform: scale(1.05) translate(-1%, -1%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-img { animation: none; }
+}
+
+/* ---------- Project card image subtle zoom on hover ---------- */
+.project-card { overflow: hidden; }
+.project-thumb {
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.project-card:hover .project-thumb { transform: scale(1.04); }
+
+/* ---------- Slider (crossfade) ---------- */
+.fx-slider {
+  position: relative;
+  width: 100%;
+  max-width: min(1000px, 90vw);
+  max-height: 90vh;
+  margin: 40px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e8e7e4;
+  aspect-ratio: 16 / 10;
+}
+.fx-slider .fx-slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12%;
+  width: 76%;
+  opacity: 0;
+  transform: translateX(0) scale(.92);
+  transition:
+    transform .7s cubic-bezier(.4, 0, .2, 1),
+    opacity .55s cubic-bezier(.4, 0, .2, 1);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.fx-slider .fx-slide.is-active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  z-index: 2;
+}
+.fx-slider .fx-slide.is-prev {
+  opacity: .35;
+  transform: translateX(-92%) scale(.88);
+  z-index: 1;
+}
+.fx-slider .fx-slide.is-next {
+  opacity: .35;
+  transform: translateX(92%) scale(.88);
+  z-index: 1;
+}
+.fx-slider .fx-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #e8e7e4;
+  display: block;
+  cursor: zoom-in;
+}
+.fx-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: #1a1a1a;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  transition: background .2s, transform .2s;
+  z-index: 2;
+}
+.fx-slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.06); }
+.fx-slider-btn.prev { left: 16px; }
+.fx-slider-btn.next { right: 16px; }
+.fx-slider-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+.fx-slider-dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s, transform .2s;
+}
+.fx-slider-dots button.is-active {
+  background: #fff;
+  transform: scale(1.3);
+}
+.fx-slider-counter {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #fff;
+  background: rgba(0,0,0,.5);
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+/* ---------- Lightbox ---------- */
+.fx-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0,0,0,.92);
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  cursor: zoom-out;
+  animation: fxFadeIn .25s ease;
+}
+.fx-lightbox.is-open { display: flex; }
+.fx-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 20px 80px rgba(0,0,0,.6);
+  animation: fxZoomIn .3s ease;
+}
+.fx-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: .8;
+}
+.fx-lightbox-close:hover { opacity: 1; }
+@keyframes fxFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fxZoomIn { from { transform: scale(.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* Make inline images on project pages also clickable for lightbox */
+.page-images img { cursor: zoom-in; transition: transform .4s ease; }
+.page-images img:hover { transform: scale(1.01); }
+
+/* ---------- Cap every content image at 90% of viewport, preserve aspect ratio ---------- */
+.project-page .block-image img,
+.page-images img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+}
+.project-page .block-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Project page block layout ---------- */
+.project-page .block { margin: 40px auto; max-width: 880px; }
+.project-page .block-text { max-width: 760px; }
+.project-page .block-text h1,
+.project-page .block-text h2,
+.project-page .block-text h3 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 32px 0 14px;
+  line-height: 1.25;
+}
+.project-page .block-text h1 { font-size: 32px; }
+.project-page .block-text p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #333;
+  margin-bottom: 16px;
+}
+.project-page .block-text ul,
+.project-page .block-text ol {
+  margin: 0 0 18px 22px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #333;
+}
+.project-page .block-text a {
+  color: #1a1a1a;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.project-page .block-image img {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+  cursor: zoom-in;
+  background: #eee;
+}
+.project-page .block-gallery { max-width: 1000px; }
+.project-page .block-gallery .fx-slider { margin: 0; }
+
+/* Single-image fallback gallery renders flat */
+.fx-slider.fx-slider-single { background: transparent; aspect-ratio: auto; }
+.fx-slider.fx-slider-single .fx-slide { position: relative; opacity: 1; }
+.fx-slider.fx-slider-single .fx-slide img { height: auto; object-fit: contain; }
+
+@media (max-width: 768px) {
+  .fx-slider { aspect-ratio: 4 / 3; }
+  .fx-slider-btn { width: 38px; height: 38px; font-size: 18px; }
+  .project-page .block { margin: 28px auto; }
+}

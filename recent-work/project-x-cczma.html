@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Brent Brooks</title>
+<title>Project X - Brent Brooks - Brent Brooks</title>
 <style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
 html{scroll-behavior:smooth}
@@ -61,22 +61,35 @@ footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;ma
   .page,.contact{padding:40px 24px 60px}
   .footer-inner{flex-direction:column}
 }</style>
-<link rel="stylesheet" href="site-fx.css"></head>
+<link rel="stylesheet" href="../site-fx.css">
+</head>
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">BRENT BROOKS</a>
+    <a href="../index.html" class="nav-logo">BRENT BROOKS</a>
     <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="navLinks"><a href="recent-work.html">Work</a><a href="contact.html">Contact</a></div>
+    <div class="nav-links" id="navLinks"><a href="../recent-work.html" class="active">Work</a><a href="../contact.html">Contact</a></div>
   </div>
 </nav>
-<section class="hero">
-  <img class="hero-img" src="images/Hello@2x.png" alt="Hello">
-  <p class="hero-bio">I've spent my career in the space between making and leading. Building teams that are genuinely engaged and creatively ambitious, while staying close enough to the work to push it further.</p>
-<p class="hero-bio">Right now, a big part of that is helping design teams integrate AI into how they actually work. Not the hype, but the real operational shift in how we go from idea to execution. Agency-side, client-side, big brands, complex problems. What I keep coming back to is the same thing: deep empathy for the end user and a restlessness about getting it right.</p>
+<article class="page project-page">
+  <a href="../recent-work.html" class="back-link">&larr; Back to Work</a>
+  <h1>Project X — Brent Brooks</h1>
+  <div class="block block-text"><h1>Project X</h1><h3>Project-X was a future-state vision of an enterprise-wide app experience for Bank of America.&nbsp; Personalized to the individuals’ varied and potentially complex relationship with the bank and needs.</h3></div>
+<figure class="block block-image"><img src="../images/MacBook+Pro+14_+-+1@2x.png" alt="Project X — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Problem</h3><p>All lines of business are being consolidated into a single experience (401k, individual investing, advised relationships, private banking, small business, and consumer banking). How can we create a unified experience that respects each user's unique relationship with the bank and their finances.  Additionally we had an aggressive deadline of 3 months to make it in time for a Board of Directors meeting. </p></div>
+<div class="block block-text"><h3>Initial sketches</h3><p>We created a set of optional components aligned to our identified three personas. We didn't just recreate what currently existed across BofA's enterprise; instead, we built from the ground up, sourcing from patterns within and outside the financial space.</p><p><strong>Core principles:</strong></p><ul><li><p><strong>Intuitive</strong> –&nbsp;Users can instinctively navigate the app. Their mental models are reflected in the features, labels, calls-to-action, etc.</p></li><li><p><strong>Fluid</strong> – Features are organized recognizably and predictably. It feels fluid and natural, and each screen is connected.</p></li><li><p><strong>Simple</strong> –&nbsp;Visuals are not distracting, with only the meaningful information presented.</p></li><li><p><strong>Welcoming</strong> – Users are offered a positive experience that is customized to their needs. Delivering insight, functionality, and guidance when and where needed.</p></li></ul></div>
+<figure class="block block-image"><img src="../images/wire1.png" alt="Project X — Brent Brooks" loading="lazy"><figcaption class="block-caption"><p>Even with very little time - we still explored multiple approaches to the initial designs.  </p></figcaption></figure>
+<figure class="block block-image"><img src="../images/Wire-2.png" alt="Project X — Brent Brooks" loading="lazy"><figcaption class="block-caption"><p>After building the baseline story flow and lo-fi components we moved on to initial high-fidelity design executions.</p></figcaption></figure>
+<div class="block block-text"><h3>Outcome</h3><p>The final prototype created a unified framework that adapted to the user allowing them to perform tasks that previously force them to jump between multiple apps. &nbsp; Even though we had only 3 months from beginning to end, we managed to work through foundational research to final prototypes.</p></div>
+<figure class="block block-image"><img src="../images/widgets.png" alt="Project X — Brent Brooks" loading="lazy"><figcaption class="block-caption"><p>Examples of contextual components we built to solve for various use cases.</p></figcaption></figure>
+<div class="block block-text"><h3>Aaron experience</h3><p>Simple account profile. Hands-off mindset.  Mass market, small business owner.</p></div>
+<figure class="block block-image"><img src="../images/aaron.png" alt="Project X — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Charlie</h3><p>Average account profile. Hands-on mindset.  Affluent, casual trader.</p></div>
+<figure class="block block-image"><img src="../images/Charlie.png" alt="Project X — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Ana</h3><p>Complex banking relationship.  Hands-on mindset, High-net-worth, high-growth business owner.</p></div>
+<figure class="block block-image"><img src="../images/Ana.png" alt="Project X — Brent Brooks" loading="lazy"></figure>
 
-  <a href="recent-work.html" class="hero-cta">View Work</a>
-</section>
+</article>
 <footer>
   <div class="footer-inner">
     <span>&copy; 2026 Brent Brooks</span>
@@ -87,5 +100,6 @@ footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;ma
   </div>
 </footer>
 <script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}</script>
-<script src="site-fx.js"></script></body>
+<script src="../site-fx.js"></script>
+</body>
 </html>

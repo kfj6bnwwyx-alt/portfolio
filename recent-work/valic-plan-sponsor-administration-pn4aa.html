@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VALIC - Plan Sponsor Administration - Brent Brooks - Brent Brooks</title>
+<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-width);margin:0 auto;padding:0 40px;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text);text-decoration:none}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
+.hero{max-width:var(--max-width);margin:0 auto;padding:80px 40px 60px;text-align:center}
+.hero-img{max-width:520px;margin:0 auto 40px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:32px}
+.hero-bio{max-width:720px;margin:0 auto 18px;font-size:18px;line-height:1.7;color:var(--text-secondary)}
+.hero-cta{display:inline-block;margin-top:36px;padding:18px 48px;background:var(--accent);color:var(--white);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:opacity .2s}
+.hero-cta:hover{opacity:.85}
+.section-title{max-width:var(--max-width);margin:0 auto;padding:60px 40px 30px;font-size:28px;font-weight:700}
+.projects{max-width:var(--max-width);margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.project-card{position:relative;border-radius:6px;overflow:hidden;background:var(--card-bg);text-decoration:none;color:inherit;transition:transform .25s ease,box-shadow .25s ease}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.project-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#ddd}
+.project-info{padding:18px 20px}
+.project-info h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.project-info p{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
+.page{max-width:var(--max-width);margin:0 auto;padding:60px 40px 80px}
+.page h1{font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:32px}
+.page h2{font-size:24px;font-weight:700;margin:40px 0 16px}
+.page p{font-size:17px;line-height:1.75;color:#333;margin-bottom:18px;max-width:760px}
+.page-images{display:flex;flex-direction:column;gap:24px;margin:32px 0}
+.page-images img{width:100%;border-radius:6px;background:#eee}
+.back-link{display:inline-block;margin-bottom:30px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none}
+.back-link:hover{color:var(--text)}
+.contact{max-width:var(--max-width);margin:0 auto;padding:60px 40px 100px}
+.contact h1{font-size:48px;font-weight:900;margin-bottom:30px}
+.contact-info p{font-size:17px;margin-bottom:12px;color:#333}
+.contact-info a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;margin-top:40px}
+.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-inner span{font-size:13px;color:var(--text-secondary)}
+.social-links{display:flex;gap:20px}
+.social-links a{color:var(--text-secondary);text-decoration:none;font-size:13px}
+.social-links a:hover{color:var(--text)}
+@media (max-width:900px){.projects{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:var(--nav-height);left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 40px 30px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hero{padding:50px 24px 40px}
+  .section-title{padding:40px 24px 20px}
+  .projects{grid-template-columns:1fr;padding:0 24px 60px}
+  .page,.contact{padding:40px 24px 60px}
+  .footer-inner{flex-direction:column}
+}</style>
+<link rel="stylesheet" href="../site-fx.css">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">BRENT BROOKS</a>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks"><a href="../recent-work.html" class="active">Work</a><a href="../contact.html">Contact</a></div>
+  </div>
+</nav>
+<article class="page project-page">
+  <a href="../recent-work.html" class="back-link">&larr; Back to Work</a>
+  <h1>VALIC - Plan Sponsor Administration — Brent Brooks</h1>
+  <div class="block block-text"><h1>VALIC</h1><h2>Revising an investment administration platform for public-sector employees.</h2><p>VALIC is an investment program for employees of non-profits, from police and departments,to universities and hospitals. &nbsp;The administration platform exists to enable plan administrators to perform necessary tasks such as running reports, approving loans, and monitoring performance.</p></div>
+<figure class="block block-image"><img src="../images/PSO+hero.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Problem</h3><p>Plan administrators had been complaining about a poor experience with the VALIC platform for a while. Our review confirmed that functionality trailed behind the competition such as Vanguard and Fidelity, items were hidden or difficult to find, and the site looked dated. </p><p>Users of the platform ranged from large organizations of tens of thousands of people to small elementary schools of 10 to 20 people. &nbsp;For some admins managing these accounts were their sole job, while others this was one of many assignments.  </p><p>During interviews with the help desk, stakeholders, and end-users we discovered that VALIC's biggest differentiator was customer service -- delivered via both people on the ground and the help desk.    Unfortunately, these people were being drowned in low-value calls and tasks  -- such as how to get a basic report or where to find a piece of functionality that should have been obvious. </p></div>
+<div class="block block-gallery"><div class="fx-slider fx-slider-static">
+<div class="fx-slide is-active"><img src="../images/Screen+Shot+2019-03-19+at+3.16.47+PM.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+<div class="fx-slide"><img src="../images/Screen+Shot+2019-03-19+at+3.17.01+PM.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+<div class="fx-slide"><img src="../images/Screen+Shot+2019-03-19+at+3.17.17+PM.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+</div></div>
+<div class="block block-text"><p>It became quite clear that site could become more valuable to both users and AIG by automating low-value tasks. This would make it easier for plan administrators to get things done and free up time for VALIC service representatives to &nbsp;focus on higher value tasks.</p><h3>Solution</h3><p>After research completed and we presented our findings we had to quickly shift to design as the developers were ready to start coding. We used an agile design process, that ran in lockstep with development. This enabled us to bring a new experience live in a matter of months.</p><h3>Plan Dashboard</h3><p>Bringing forward the most important aspects of their plan, so time stretched admins can maximize time spent on the platform.</p></div>
+<figure class="block block-image"><img src="../images/mobile+1.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/mobile+2.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Plan Health Details</h3><p>Putting standard KPIs one click away, with the option to customize as needed.</p></div>
+<figure class="block block-image"><img src="../images/Plan+Health+again.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/Plan+Health.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Results</h3><p>The relaunch of the admin tool has resulted in several new-business wins as well as significantly increasing the retention of current ones.</p><p><br><br></p></div>
+<div class="block block-gallery"><div class="fx-slider fx-slider-static">
+<div class="fx-slide is-active"><img src="../images/IMG_0172.JPG" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+<div class="fx-slide"><img src="../images/IMG_0743.JPG" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+<div class="fx-slide"><img src="../images/IMG_0751.JPG" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+<div class="fx-slide"><img src="../images/IMG_0935.JPG" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></div>
+</div></div>
+<figure class="block block-image"><img src="../images/valic+pso+quote+1.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h2>VALIC Mobile App</h2><p>Extremely constrained by both budget and timing, this sprint focused on addressing the most essential experience and business objectives. Our team delivered a finished app on a tight timeline by utilizing the internally-created Hinge design system to drive increased development velocity and improved quality. </p></div>
+<figure class="block block-image"><img src="../images/VALIC-mobile-1.png" alt="VALIC - Plan Sponsor Administration — Brent Brooks" loading="lazy"><figcaption class="block-caption"><p>During the later half of 2017 and first quarter of 2018, the design team embarked on redesigning mobile experience for VALIC.</p></figcaption></figure>
+<div class="block block-text"><p>Team:<br>Ekta Shah, Luana Ramcharran, Kathryn Depue, Evelyn Pandozi, Emily Marcom, Jane Xiao, Kurt Flor, Jody Hankinson, Josh Leavitt, Brent Brooks</p></div>
+
+</article>
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 Brent Brooks</span>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:me@brentbrooks.com">Email</a>
+    </div>
+  </div>
+</footer>
+<script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}</script>
+<script src="../site-fx.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Claude Code working state (worktrees, session data, etc.)
+.claude/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp

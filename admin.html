@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Brent Brooks</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f0efed;color:#1a1a1a;line-height:1.5;padding:0;min-height:100vh}
+header{background:#1a1a1a;color:#fff;padding:16px 28px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:10}
+header h1{font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-right:auto}
+button{font-family:inherit;font-size:13px;cursor:pointer;border:none;padding:10px 18px;border-radius:4px;background:#fff;color:#1a1a1a;font-weight:600;letter-spacing:.5px;transition:opacity .15s}
+button:hover{opacity:.85}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.primary{background:#4ba64b;color:#fff}
+button.danger{background:#c24a4a;color:#fff}
+button.ghost{background:transparent;color:#fff;border:1px solid #666}
+.banner{padding:12px 28px;background:#ffe8a0;color:#5a4200;font-size:13px;border-bottom:1px solid #e0cf70}
+.banner.ok{background:#d6f3d6;color:#1e5a1e;border-color:#a3d9a3}
+.banner.err{background:#f7d7d7;color:#7a2424;border-color:#e5a6a6}
+main{max-width:1100px;margin:0 auto;padding:28px;display:grid;grid-template-columns:240px 1fr;gap:24px}
+nav.side{position:sticky;top:76px;align-self:start;background:#fff;border-radius:6px;padding:12px;max-height:calc(100vh - 100px);overflow-y:auto}
+nav.side button{display:block;width:100%;text-align:left;padding:8px 10px;margin-bottom:2px;background:transparent;font-weight:500;font-size:13px;border-radius:3px}
+nav.side button:hover{background:#ececea}
+nav.side button.active{background:#1a1a1a;color:#fff}
+nav.side h4{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#666;margin:14px 10px 6px}
+nav.side h4:first-child{margin-top:0}
+section.panel{background:#fff;border-radius:6px;padding:28px;min-height:60vh}
+section.panel h2{font-size:22px;font-weight:700;margin-bottom:6px}
+section.panel .sub{font-size:13px;color:#666;margin-bottom:24px}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:6px;margin-top:14px}
+input[type=text],input[type=email],textarea,select{width:100%;font-family:inherit;font-size:14px;padding:10px 12px;border:1px solid #d4d4d4;border-radius:4px;background:#fafaf9;color:#1a1a1a}
+textarea{min-height:90px;resize:vertical;line-height:1.55;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#1a1a1a;background:#fff}
+.block-item{border:1px solid #e0dfdd;border-radius:5px;padding:14px;margin-bottom:12px;background:#fafaf9;position:relative}
+.block-item .block-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#666;font-weight:600}
+.block-item .block-head .type-badge{background:#1a1a1a;color:#fff;padding:3px 8px;border-radius:3px;font-size:10px}
+.block-item .block-head .spacer{flex:1}
+.block-item .block-head button{padding:5px 9px;font-size:11px;background:#ececea;color:#333}
+.block-item .block-head button.del{background:#f7d7d7;color:#7a2424}
+.slide-item{border:1px dashed #d4d4d4;padding:10px;margin-top:8px;border-radius:4px;background:#fff}
+.slide-item .slide-head{display:flex;gap:6px;margin-bottom:6px;font-size:11px;color:#666}
+.slide-item .slide-head .spacer{flex:1}
+.add-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.add-row button{background:#ececea;color:#1a1a1a;font-size:12px;padding:8px 14px}
+.project-grid-editor .project-row{display:grid;grid-template-columns:40px 80px 1fr 1fr 1fr 80px;gap:8px;align-items:center;padding:8px;border-bottom:1px solid #ececea;font-size:13px}
+.project-grid-editor .project-row img{width:70px;height:52px;object-fit:cover;border-radius:3px;background:#ddd}
+.project-grid-editor .project-row input{padding:6px 8px;font-size:13px}
+.project-grid-editor .project-row button{padding:5px 9px;font-size:11px;background:#ececea}
+.project-grid-editor .head{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#666;padding:6px 8px;border-bottom:2px solid #1a1a1a}
+.dirty-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e8b040;margin-left:6px;vertical-align:middle}
+.intro{background:#fafaf9;border:1px solid #e0dfdd;border-radius:6px;padding:40px;text-align:center;margin:40px auto;max-width:600px}
+.intro h2{font-size:24px;margin-bottom:10px}
+.intro p{color:#666;margin-bottom:20px;font-size:14px}
+.intro button{font-size:14px;padding:14px 28px}
+code.inline{background:#ececea;padding:2px 6px;border-radius:3px;font-size:12px}
+.help{font-size:12px;color:#888;margin-top:4px}
+@media (max-width:900px){main{grid-template-columns:1fr}nav.side{position:static;max-height:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>BRENT BROOKS — ADMIN</h1>
+  <span id="status" style="font-size:12px;color:#aaa"></span>
+  <button class="ghost" id="reloadBtn" disabled>Reload from disk</button>
+  <button class="primary" id="saveBtn" disabled>Save</button>
+</header>
+<div id="banner"></div>
+<main id="appRoot">
+  <div class="intro" id="intro">
+    <h2>Stupid-simple CMS</h2>
+    <p>Click below, then select this site's root folder (the one that contains <code class="inline">index.html</code>). Everything stays on your machine — nothing leaves the browser.</p>
+    <p style="font-size:12px">Requires Chrome or Edge.</p>
+    <button class="primary" id="openBtn">Open site folder</button>
+    <p style="font-size:12px;margin-top:18px;color:#c24a4a" id="iframeWarning"></p>
+    <p style="font-size:11px;margin-top:10px;color:#888">Press <code class="inline">F12</code> to open DevTools and watch the Console tab if something goes wrong.</p>
+  </div>
+</main>
+
+<script>
+'use strict';
+// ============================================================
+// STUPID-SIMPLE CMS
+//   - Opens a local folder via File System Access API
+//   - On first open: scrapes existing HTML pages into content.json
+//   - Edits in-browser; Save writes content.json + regenerates HTML
+//   - Only regenerates pages you've actually edited (dirty-tracking)
+// ============================================================
+
+// ---------- State ----------
+const state = {
+  dirHandle: null,       // FileSystemDirectoryHandle for site root
+  imagesDir: null,       // FileSystemDirectoryHandle for /images
+  workDir: null,         // FileSystemDirectoryHandle for /recent-work
+  content: null,         // the full editable content tree
+  imageList: [],         // filenames from /images
+  dirty: new Set(),      // which sections are dirty ('home','contact','work','project:<slug>')
+  contentJsonExists: false,
+  currentView: 'home',
+};
+
+// ---------- Page template (identical inline style block from existing pages) ----------
+const PAGE_STYLE = `*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-width);margin:0 auto;padding:0 40px;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text);text-decoration:none}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
+.hero{max-width:var(--max-width);margin:0 auto;padding:80px 40px 60px;text-align:center}
+.hero-img{max-width:520px;margin:0 auto 40px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:32px}
+.hero-bio{max-width:720px;margin:0 auto 18px;font-size:18px;line-height:1.7;color:var(--text-secondary)}
+.hero-cta{display:inline-block;margin-top:36px;padding:18px 48px;background:var(--accent);color:var(--white);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:opacity .2s}
+.hero-cta:hover{opacity:.85}
+.section-title{max-width:var(--max-width);margin:0 auto;padding:60px 40px 30px;font-size:28px;font-weight:700}
+.projects{max-width:var(--max-width);margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.project-card{position:relative;border-radius:6px;overflow:hidden;background:var(--card-bg);text-decoration:none;color:inherit;transition:transform .25s ease,box-shadow .25s ease}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.project-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#ddd}
+.project-info{padding:18px 20px}
+.project-info h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.project-info p{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
+.page{max-width:var(--max-width);margin:0 auto;padding:60px 40px 80px}
+.page h1{font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:32px}
+.page h2{font-size:24px;font-weight:700;margin:40px 0 16px}
+.page p{font-size:17px;line-height:1.75;color:#333;margin-bottom:18px;max-width:760px}
+.page-images{display:flex;flex-direction:column;gap:24px;margin:32px 0}
+.page-images img{width:100%;border-radius:6px;background:#eee}
+.back-link{display:inline-block;margin-bottom:30px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none}
+.back-link:hover{color:var(--text)}
+.contact{max-width:var(--max-width);margin:0 auto;padding:60px 40px 100px}
+.contact h1{font-size:48px;font-weight:900;margin-bottom:30px}
+.contact-info p{font-size:17px;margin-bottom:12px;color:#333}
+.contact-info a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;margin-top:40px}
+.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-inner span{font-size:13px;color:var(--text-secondary)}
+.social-links{display:flex;gap:20px}
+.social-links a{color:var(--text-secondary);text-decoration:none;font-size:13px}
+.social-links a:hover{color:var(--text)}
+@media (max-width:900px){.projects{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:var(--nav-height);left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 40px 30px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hero{padding:50px 24px 40px}
+  .section-title{padding:40px 24px 20px}
+  .projects{grid-template-columns:1fr;padding:0 24px 60px}
+  .page,.contact{padding:40px 24px 60px}
+  .footer-inner{flex-direction:column}
+}`;
+
+function shellOpen({ title, base, activeNav }) {
+  const href = (p) => base + p;
+  const navClass = (name) => name === activeNav ? ' class="active"' : '';
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${escHtml(title)}</title>
+<style>${PAGE_STYLE}</style>
+<link rel="stylesheet" href="${href('site-fx.css')}">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="${href('index.html')}" class="nav-logo">BRENT BROOKS</a>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks"><a href="${href('recent-work.html')}"${navClass('work')}>Work</a><a href="${href('contact.html')}"${navClass('contact')}>Contact</a></div>
+  </div>
+</nav>
+`;
+}
+
+function shellClose(base) {
+  // NOTE: the closing script tags below are written as <\/script> so that the
+  // HTML parser of *this* admin page doesn't prematurely terminate the
+  // surrounding script block. The backslash is a no-op in a JS string, so
+  // the output HTML is byte-identical.
+  return `<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 Brent Brooks</span>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:me@brentbrooks.com">Email</a>
+    </div>
+  </div>
+</footer>
+<script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}<\/script>
+<script src="${base}site-fx.js"><\/script>
+</body>
+</html>`;
+}
+
+// ---------- Renderers (content -> HTML) ----------
+function escHtml(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderHome(c) {
+  const h = c.home || {};
+  const bioParas = (h.bio || []).map(p => `<p class="hero-bio">${p}</p>`).join('\n');
+  return shellOpen({ title: 'Brent Brooks', base: '', activeNav: '' }) +
+`<section class="hero">
+  <img class="hero-img" src="${escHtml(h.heroImage || 'images/Hello@2x.png')}" alt="Hello">
+${bioParas}
+
+  <a href="recent-work.html" class="hero-cta">View Work</a>
+</section>
+` + shellClose('');
+}
+
+function renderContact(c) {
+  const k = c.contact || {};
+  const info = (k.lines || []).map(line => `    <p>${line}</p>`).join('\n');
+  return shellOpen({ title: 'Contact — Brent Brooks', base: '', activeNav: 'contact' }) +
+`<section class="contact">
+  <h1>${escHtml(k.heading || 'Drop Me a Line')}</h1>
+  <div class="contact-info">
+${info}
+  </div>
+</section>
+` + shellClose('');
+}
+
+function renderWork(c) {
+  const w = c.work || {};
+  const title = w.sectionTitle || 'Product Design, UI/UX, Social, and Campaign work.';
+  const cards = (w.projects || []).map(p => {
+    return `  <a class="project-card" href="recent-work/${escHtml(p.slug)}.html">
+    <img class="project-thumb" src="${escHtml(p.thumb)}" alt="${escHtml(p.title)}" loading="lazy">
+    <div class="project-info"><h3>${escHtml(p.title)}</h3><p>${escHtml(p.category)}</p></div>
+  </a>`;
+  }).join('');
+  return shellOpen({ title: 'Work — Brent Brooks', base: '', activeNav: 'work' }) +
+`<h1 class="section-title">${escHtml(title)}</h1>
+<div class="projects">
+${cards}
+</div>
+` + shellClose('');
+}
+
+function renderBlock(block) {
+  if (block.type === 'text') {
+    return `<div class="block block-text">${block.html || ''}</div>`;
+  }
+  if (block.type === 'image') {
+    const src = escHtml(block.src || '');
+    const alt = escHtml(block.alt || '');
+    let caption = '';
+    if (block.captionHtml && block.captionHtml.trim()) {
+      caption = `<figcaption class="block-caption">${block.captionHtml}</figcaption>`;
+    }
+    return `<figure class="block block-image"><img src="${src}" alt="${alt}" loading="lazy">${caption}</figure>`;
+  }
+  if (block.type === 'gallery') {
+    const slides = (block.slides || []).map((s, i) => {
+      const activeCls = i === 0 ? ' is-active' : '';
+      const src = escHtml(s.src || '');
+      const alt = escHtml(s.alt || s.title || '');
+      let meta = '';
+      if ((s.title && s.title.trim()) || (s.desc && s.desc.trim())) {
+        const t = s.title ? `<div class="fx-slide-title">${escHtml(s.title)}</div>` : '';
+        const d = s.desc ? `<div class="fx-slide-desc">${escHtml(s.desc)}</div>` : '';
+        meta = `<div class="fx-slide-meta">${t}${d}</div>`;
+      }
+      return `<div class="fx-slide${activeCls}"><img src="${src}" alt="${alt}" loading="lazy">${meta}</div>`;
+    }).join('\n');
+    return `<div class="block block-gallery"><div class="fx-slider fx-slider-static">\n${slides}\n</div></div>`;
+  }
+  return '';
+}
+
+function renderProject(p) {
+  const title = p.title || 'Untitled';
+  const pageTitle = `${title} - Brent Brooks - Brent Brooks`;
+  const h1 = `${title} — Brent Brooks`;
+  const blocks = (p.blocks || []).map(renderBlock).join('\n');
+  return shellOpen({ title: pageTitle, base: '../', activeNav: 'work' }) +
+`<article class="page project-page">
+  <a href="../recent-work.html" class="back-link">&larr; Back to Work</a>
+  <h1>${escHtml(h1)}</h1>
+  ${blocks}
+
+</article>
+` + shellClose('../');
+}
+
+// ---------- Extractor (parse existing HTML -> content object) ----------
+async function readFileText(dir, name) {
+  try {
+    const fh = await dir.getFileHandle(name);
+    const file = await fh.getFile();
+    return await file.text();
+  } catch (e) {
+    return null;
+  }
+}
+
+function parseHtml(text) {
+  return new DOMParser().parseFromString(text, 'text/html');
+}
+
+function extractHome(text) {
+  const doc = parseHtml(text);
+  const hero = doc.querySelector('.hero');
+  const img = hero ? hero.querySelector('.hero-img') : null;
+  const bios = hero ? Array.from(hero.querySelectorAll('.hero-bio')).map(p => p.innerHTML.trim()) : [];
+  return {
+    heroImage: img ? img.getAttribute('src') : 'images/Hello@2x.png',
+    bio: bios,
+  };
+}
+
+function extractContact(text) {
+  const doc = parseHtml(text);
+  const h1 = doc.querySelector('.contact h1');
+  const lines = Array.from(doc.querySelectorAll('.contact-info p')).map(p => p.innerHTML.trim());
+  return { heading: h1 ? h1.textContent.trim() : 'Drop Me a Line', lines };
+}
+
+function extractWork(text) {
+  const doc = parseHtml(text);
+  const title = doc.querySelector('.section-title');
+  const cards = Array.from(doc.querySelectorAll('.project-card')).map(a => {
+    const href = a.getAttribute('href') || '';
+    const m = href.match(/recent-work\/(.+)\.html$/);
+    const slug = m ? m[1] : href;
+    const img = a.querySelector('img');
+    const h3 = a.querySelector('h3');
+    const p = a.querySelector('p');
+    return {
+      slug,
+      title: h3 ? h3.textContent.trim() : '',
+      category: p ? p.textContent.trim() : '',
+      thumb: img ? img.getAttribute('src') : '',
+    };
+  });
+  return {
+    sectionTitle: title ? title.textContent.trim() : '',
+    projects: cards,
+  };
+}
+
+function extractProject(slug, text) {
+  const doc = parseHtml(text);
+  const article = doc.querySelector('article.project-page');
+  if (!article) return { slug, title: slug, blocks: [] };
+  const h1 = article.querySelector('h1');
+  let title = h1 ? h1.textContent.trim() : slug;
+  // strip " — Brent Brooks" suffix
+  title = title.replace(/\s+[—–-]\s*Brent Brooks\s*$/, '');
+  const blocks = [];
+  for (const el of article.children) {
+    if (!el.classList || !el.classList.contains('block')) continue;
+    if (el.classList.contains('block-text')) {
+      blocks.push({ type: 'text', html: el.innerHTML.trim() });
+    } else if (el.classList.contains('block-image')) {
+      const img = el.querySelector('img');
+      const cap = el.querySelector('figcaption.block-caption');
+      blocks.push({
+        type: 'image',
+        src: img ? img.getAttribute('src') : '',
+        alt: img ? (img.getAttribute('alt') || '') : '',
+        captionHtml: cap ? cap.innerHTML.trim() : '',
+      });
+    } else if (el.classList.contains('block-gallery')) {
+      const slides = Array.from(el.querySelectorAll('.fx-slide')).map(s => {
+        const img = s.querySelector('img');
+        const t = s.querySelector('.fx-slide-title');
+        const d = s.querySelector('.fx-slide-desc');
+        return {
+          src: img ? img.getAttribute('src') : '',
+          alt: img ? (img.getAttribute('alt') || '') : '',
+          title: t ? t.textContent.trim() : '',
+          desc: d ? d.textContent.trim() : '',
+        };
+      });
+      blocks.push({ type: 'gallery', slides });
+    }
+  }
+  return { slug, title, blocks };
+}
+
+// strip leading ../ from paths so they become canonical (relative to site root)
+function stripRel(src) {
+  if (!src) return src;
+  return src.replace(/^\.\.\//, '');
+}
+function addRel(src) {
+  if (!src) return src;
+  if (/^https?:/.test(src)) return src;
+  if (src.startsWith('../')) return src;
+  return '../' + src;
+}
+function canonicalizeProject(p) {
+  for (const b of p.blocks) {
+    if (b.type === 'image') b.src = stripRel(b.src);
+    if (b.type === 'gallery') b.slides.forEach(s => { s.src = stripRel(s.src); });
+  }
+  return p;
+}
+function renderizeProject(p) {
+  // clone + rewrite image paths to use ../ for project pages
+  const out = JSON.parse(JSON.stringify(p));
+  for (const b of out.blocks) {
+    if (b.type === 'image') b.src = addRel(b.src);
+    if (b.type === 'gallery') b.slides.forEach(s => { s.src = addRel(s.src); });
+  }
+  return out;
+}
+
+// ---------- Filesystem helpers ----------
+async function writeFile(dir, name, contents) {
+  const fh = await dir.getFileHandle(name, { create: true });
+  const w = await fh.createWritable();
+  await w.write(contents);
+  await w.close();
+}
+
+async function listImages(imagesDir) {
+  const names = [];
+  for await (const [name, handle] of imagesDir.entries()) {
+    if (handle.kind === 'file') names.push(name);
+  }
+  names.sort();
+  return names;
+}
+
+// ---------- Extraction pipeline (first open) ----------
+async function scrapeAllFromDisk() {
+  const root = state.dirHandle;
+  const indexText = await readFileText(root, 'index.html');
+  const contactText = await readFileText(root, 'contact.html');
+  const workText = await readFileText(root, 'recent-work.html');
+
+  const home = indexText ? extractHome(indexText) : { bio: [], heroImage: 'images/Hello@2x.png' };
+  const contact = contactText ? extractContact(contactText) : { heading: 'Drop Me a Line', lines: [] };
+  const work = workText ? extractWork(workText) : { sectionTitle: '', projects: [] };
+
+  // pull project pages in the order they appear on the Work grid
+  const projects = {};
+  for (const row of work.projects) {
+    const text = await readFileText(state.workDir, row.slug + '.html');
+    if (!text) continue;
+    const p = extractProject(row.slug, text);
+    canonicalizeProject(p);
+    projects[row.slug] = p;
+  }
+  return { home, contact, work, projects };
+}
+
+// ---------- Main open-folder flow ----------
+async function openFolder() {
+  try {
+    const dir = await window.showDirectoryPicker({ mode: 'readwrite' });
+    state.dirHandle = dir;
+    // Sanity check — must contain index.html
+    const idx = await readFileText(dir, 'index.html');
+    if (!idx) {
+      setBanner('That folder does not contain index.html. Pick the site root.', 'err');
+      return;
+    }
+    // get subdir handles
+    state.workDir = await dir.getDirectoryHandle('recent-work');
+    try { state.imagesDir = await dir.getDirectoryHandle('images'); } catch (e) { state.imagesDir = null; }
+    if (state.imagesDir) state.imageList = await listImages(state.imagesDir);
+
+    // try loading existing content.json
+    const jsonText = await readFileText(dir, 'content.json');
+    if (jsonText) {
+      state.content = JSON.parse(jsonText);
+      state.contentJsonExists = true;
+      setBanner('Loaded content.json. Edit anything, then click Save.', 'ok');
+    } else {
+      state.content = await scrapeAllFromDisk();
+      state.contentJsonExists = false;
+      setBanner('No content.json yet — scraped current site into memory. Click Save to create content.json (HTML files will NOT be touched until you edit something).', '');
+    }
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('saveBtn').disabled = false;
+    document.getElementById('reloadBtn').disabled = false;
+    renderApp();
+  } catch (e) {
+    if (e.name === 'AbortError') return;
+    console.error(e);
+    setBanner('Failed to open folder: ' + e.message, 'err');
+  }
+}
+
+// ---------- UI rendering ----------
+function renderApp() {
+  const root = document.getElementById('appRoot');
+  root.innerHTML = '';
+  const side = el('nav', { class: 'side' });
+  const panel = el('section', { class: 'panel', id: 'panel' });
+  root.appendChild(side);
+  root.appendChild(panel);
+
+  // sidebar
+  side.appendChild(el('h4', {}, 'Pages'));
+  side.appendChild(sideBtn('home', 'Home'));
+  side.appendChild(sideBtn('contact', 'Contact'));
+  side.appendChild(sideBtn('work', 'Work page'));
+  side.appendChild(el('h4', {}, 'Projects'));
+  for (const p of state.content.work.projects) {
+    side.appendChild(sideBtn('project:' + p.slug, p.title || p.slug));
+  }
+
+  renderPanel();
+}
+
+function sideBtn(key, label) {
+  const b = el('button', {}, label);
+  if (state.currentView === key) b.classList.add('active');
+  if (state.dirty.has(key)) b.appendChild(el('span', { class: 'dirty-dot', title: 'Unsaved changes' }));
+  b.onclick = () => { state.currentView = key; renderApp(); };
+  return b;
+}
+
+function renderPanel() {
+  const panel = document.getElementById('panel');
+  panel.innerHTML = '';
+  const view = state.currentView;
+  if (view === 'home') renderHomePanel(panel);
+  else if (view === 'contact') renderContactPanel(panel);
+  else if (view === 'work') renderWorkPanel(panel);
+  else if (view.startsWith('project:')) renderProjectPanel(panel, view.slice(8));
+}
+
+function markDirty(key) {
+  state.dirty.add(key);
+  // update sidebar dot without full re-render
+  const sidebar = document.querySelector('nav.side');
+  if (sidebar) {
+    const btns = sidebar.querySelectorAll('button');
+    btns.forEach(b => { /* rerender for simplicity */ });
+  }
+  renderApp();
+}
+
+// -- Home panel --
+function renderHomePanel(panel) {
+  const h = state.content.home;
+  panel.appendChild(el('h2', {}, 'Home'));
+  panel.appendChild(el('div', { class: 'sub' }, 'The homepage hero bio paragraphs.'));
+
+  panel.appendChild(el('label', {}, 'Hero image'));
+  panel.appendChild(imagePicker(h.heroImage || '', (v) => { h.heroImage = v; markDirty('home'); }));
+
+  panel.appendChild(el('label', {}, 'Bio paragraphs'));
+  const list = el('div', {});
+  panel.appendChild(list);
+  function redraw() {
+    list.innerHTML = '';
+    (h.bio || []).forEach((text, i) => {
+      const item = el('div', { class: 'block-item' });
+      const head = el('div', { class: 'block-head' }, [
+        el('span', { class: 'type-badge' }, 'P ' + (i + 1)),
+        el('div', { class: 'spacer' }),
+        moveBtn('↑', () => { if (i > 0) { [h.bio[i-1], h.bio[i]] = [h.bio[i], h.bio[i-1]]; markDirty('home'); } }),
+        moveBtn('↓', () => { if (i < h.bio.length - 1) { [h.bio[i+1], h.bio[i]] = [h.bio[i], h.bio[i+1]]; markDirty('home'); } }),
+        delBtn(() => { h.bio.splice(i, 1); markDirty('home'); }),
+      ]);
+      item.appendChild(head);
+      const ta = el('textarea', {}, text);
+      ta.oninput = () => { h.bio[i] = ta.value; state.dirty.add('home'); };
+      item.appendChild(ta);
+      list.appendChild(item);
+    });
+    const addRow = el('div', { class: 'add-row' });
+    const addBtn = el('button', {}, '+ Add paragraph');
+    addBtn.onclick = () => { h.bio = h.bio || []; h.bio.push(''); markDirty('home'); };
+    addRow.appendChild(addBtn);
+    list.appendChild(addRow);
+  }
+  redraw();
+  panel.appendChild(el('div', { class: 'help' }, 'You can use basic HTML in these fields (e.g. <a href="…">link</a> or <em>emphasis</em>).'));
+}
+
+// -- Contact panel --
+function renderContactPanel(panel) {
+  const c = state.content.contact;
+  panel.appendChild(el('h2', {}, 'Contact'));
+  panel.appendChild(el('div', { class: 'sub' }, 'Contact page heading and info lines.'));
+
+  panel.appendChild(el('label', {}, 'Heading'));
+  const h = el('input', { type: 'text', value: c.heading || '' });
+  h.oninput = () => { c.heading = h.value; state.dirty.add('contact'); renderSidebar(); };
+  panel.appendChild(h);
+
+  panel.appendChild(el('label', {}, 'Info lines'));
+  const list = el('div', {});
+  panel.appendChild(list);
+  function redraw() {
+    list.innerHTML = '';
+    (c.lines || []).forEach((line, i) => {
+      const item = el('div', { class: 'block-item' });
+      item.appendChild(el('div', { class: 'block-head' }, [
+        el('span', { class: 'type-badge' }, 'Line ' + (i + 1)),
+        el('div', { class: 'spacer' }),
+        moveBtn('↑', () => { if (i > 0) { [c.lines[i-1], c.lines[i]] = [c.lines[i], c.lines[i-1]]; markDirty('contact'); } }),
+        moveBtn('↓', () => { if (i < c.lines.length - 1) { [c.lines[i+1], c.lines[i]] = [c.lines[i], c.lines[i+1]]; markDirty('contact'); } }),
+        delBtn(() => { c.lines.splice(i, 1); markDirty('contact'); }),
+      ]));
+      const ta = el('textarea', { style: 'min-height:52px' }, line);
+      ta.oninput = () => { c.lines[i] = ta.value; state.dirty.add('contact'); };
+      item.appendChild(ta);
+      list.appendChild(item);
+    });
+    const addRow = el('div', { class: 'add-row' });
+    const b = el('button', {}, '+ Add line');
+    b.onclick = () => { c.lines = c.lines || []; c.lines.push(''); markDirty('contact'); };
+    addRow.appendChild(b);
+    list.appendChild(addRow);
+  }
+  redraw();
+  panel.appendChild(el('div', { class: 'help' }, 'You can use HTML here, e.g. <code class="inline">Via Email: &lt;a href="mailto:me@brentbrooks.com"&gt;me@brentbrooks.com&lt;/a&gt;</code>'));
+}
+
+// -- Work (project grid) panel --
+function renderWorkPanel(panel) {
+  const w = state.content.work;
+  panel.appendChild(el('h2', {}, 'Work page'));
+  panel.appendChild(el('div', { class: 'sub' }, 'The project grid — reorder projects or edit their card info.'));
+
+  panel.appendChild(el('label', {}, 'Section title'));
+  const ti = el('input', { type: 'text', value: w.sectionTitle || '' });
+  ti.oninput = () => { w.sectionTitle = ti.value; state.dirty.add('work'); };
+  panel.appendChild(ti);
+
+  panel.appendChild(el('label', {}, 'Projects (drag handles to reorder)'));
+  const grid = el('div', { class: 'project-grid-editor' });
+  panel.appendChild(grid);
+
+  function redraw() {
+    grid.innerHTML = '';
+    const headRow = el('div', { class: 'project-row' });
+    ['', 'Thumb', 'Title', 'Category', 'Thumb src', ''].forEach(t => {
+      headRow.appendChild(el('div', { class: 'head' }, t));
+    });
+    grid.appendChild(headRow);
+
+    w.projects.forEach((p, i) => {
+      const row = el('div', { class: 'project-row' });
+      // up/down
+      const moves = el('div', {}, [
+        moveBtn('↑', () => { if (i > 0) { [w.projects[i-1], w.projects[i]] = [w.projects[i], w.projects[i-1]]; markDirty('work'); } }),
+        moveBtn('↓', () => { if (i < w.projects.length - 1) { [w.projects[i+1], w.projects[i]] = [w.projects[i], w.projects[i+1]]; markDirty('work'); } }),
+      ]);
+      row.appendChild(moves);
+      row.appendChild(el('img', { src: p.thumb || '' }));
+      const t = el('input', { type: 'text', value: p.title || '' });
+      t.oninput = () => { p.title = t.value; state.dirty.add('work'); };
+      row.appendChild(t);
+      const c = el('input', { type: 'text', value: p.category || '' });
+      c.oninput = () => { p.category = c.value; state.dirty.add('work'); };
+      row.appendChild(c);
+      const th = el('input', { type: 'text', value: p.thumb || '' });
+      th.oninput = () => { p.thumb = th.value; state.dirty.add('work'); };
+      row.appendChild(th);
+      const openBtn = el('button', {}, 'Edit →');
+      openBtn.onclick = () => { state.currentView = 'project:' + p.slug; renderApp(); };
+      row.appendChild(openBtn);
+      grid.appendChild(row);
+    });
+  }
+  redraw();
+}
+
+// -- Project detail panel --
+function renderProjectPanel(panel, slug) {
+  const p = state.content.projects[slug];
+  if (!p) {
+    panel.appendChild(el('h2', {}, 'Missing project: ' + slug));
+    return;
+  }
+  const dirtyKey = 'project:' + slug;
+  panel.appendChild(el('h2', {}, p.title || slug));
+  panel.appendChild(el('div', { class: 'sub' }, 'Slug: ' + slug));
+
+  panel.appendChild(el('label', {}, 'Project title (used in page <h1>)'));
+  const ti = el('input', { type: 'text', value: p.title || '' });
+  ti.oninput = () => { p.title = ti.value; state.dirty.add(dirtyKey); };
+  panel.appendChild(ti);
+
+  panel.appendChild(el('label', {}, 'Blocks'));
+  const list = el('div', {});
+  panel.appendChild(list);
+  function redraw() {
+    list.innerHTML = '';
+    p.blocks.forEach((b, i) => {
+      const item = el('div', { class: 'block-item' });
+      const head = el('div', { class: 'block-head' }, [
+        el('span', { class: 'type-badge' }, b.type.toUpperCase()),
+        el('span', {}, '#' + (i + 1)),
+        el('div', { class: 'spacer' }),
+        moveBtn('↑', () => { if (i > 0) { [p.blocks[i-1], p.blocks[i]] = [p.blocks[i], p.blocks[i-1]]; markDirty(dirtyKey); } }),
+        moveBtn('↓', () => { if (i < p.blocks.length - 1) { [p.blocks[i+1], p.blocks[i]] = [p.blocks[i], p.blocks[i+1]]; markDirty(dirtyKey); } }),
+        delBtn(() => { p.blocks.splice(i, 1); markDirty(dirtyKey); }),
+      ]);
+      item.appendChild(head);
+
+      if (b.type === 'text') {
+        const ta = el('textarea', { style: 'min-height:140px' }, b.html || '');
+        ta.oninput = () => { b.html = ta.value; state.dirty.add(dirtyKey); };
+        item.appendChild(ta);
+        item.appendChild(el('div', { class: 'help' }, 'Raw HTML — use &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;a&gt; etc. to match existing pages.'));
+      } else if (b.type === 'image') {
+        item.appendChild(el('label', {}, 'Image'));
+        item.appendChild(imagePicker(b.src || '', (v) => { b.src = v; state.dirty.add(dirtyKey); }));
+        item.appendChild(el('label', {}, 'Alt text'));
+        const alt = el('input', { type: 'text', value: b.alt || '' });
+        alt.oninput = () => { b.alt = alt.value; state.dirty.add(dirtyKey); };
+        item.appendChild(alt);
+        item.appendChild(el('label', {}, 'Caption HTML (optional)'));
+        const cap = el('textarea', { style: 'min-height:60px' }, b.captionHtml || '');
+        cap.oninput = () => { b.captionHtml = cap.value; state.dirty.add(dirtyKey); };
+        item.appendChild(cap);
+      } else if (b.type === 'gallery') {
+        const slides = el('div', {});
+        item.appendChild(slides);
+        function redrawSlides() {
+          slides.innerHTML = '';
+          b.slides.forEach((s, j) => {
+            const si = el('div', { class: 'slide-item' });
+            si.appendChild(el('div', { class: 'slide-head' }, [
+              el('span', {}, 'Slide ' + (j + 1)),
+              el('div', { class: 'spacer' }),
+              moveBtn('↑', () => { if (j > 0) { [b.slides[j-1], b.slides[j]] = [b.slides[j], b.slides[j-1]]; markDirty(dirtyKey); } }),
+              moveBtn('↓', () => { if (j < b.slides.length - 1) { [b.slides[j+1], b.slides[j]] = [b.slides[j], b.slides[j+1]]; markDirty(dirtyKey); } }),
+              delBtn(() => { b.slides.splice(j, 1); markDirty(dirtyKey); }),
+            ]));
+            si.appendChild(el('label', {}, 'Image'));
+            si.appendChild(imagePicker(s.src || '', (v) => { s.src = v; state.dirty.add(dirtyKey); }));
+            si.appendChild(el('label', {}, 'Title (optional)'));
+            const t = el('input', { type: 'text', value: s.title || '' });
+            t.oninput = () => { s.title = t.value; state.dirty.add(dirtyKey); };
+            si.appendChild(t);
+            si.appendChild(el('label', {}, 'Description (optional)'));
+            const d = el('input', { type: 'text', value: s.desc || '' });
+            d.oninput = () => { s.desc = d.value; state.dirty.add(dirtyKey); };
+            si.appendChild(d);
+            slides.appendChild(si);
+          });
+          const addR = el('div', { class: 'add-row' });
+          const addBtn = el('button', {}, '+ Add slide');
+          addBtn.onclick = () => { b.slides.push({ src: '', title: '', desc: '' }); markDirty(dirtyKey); };
+          addR.appendChild(addBtn);
+          slides.appendChild(addR);
+        }
+        redrawSlides();
+      }
+      list.appendChild(item);
+    });
+
+    const addRow = el('div', { class: 'add-row' });
+    [['text','+ Text block'],['image','+ Image block'],['gallery','+ Gallery block']].forEach(([t, label]) => {
+      const b = el('button', {}, label);
+      b.onclick = () => {
+        if (t === 'text') p.blocks.push({ type: 'text', html: '<p></p>' });
+        if (t === 'image') p.blocks.push({ type: 'image', src: '', alt: '', captionHtml: '' });
+        if (t === 'gallery') p.blocks.push({ type: 'gallery', slides: [{ src: '', title: '', desc: '' }] });
+        markDirty(dirtyKey);
+      };
+      addRow.appendChild(b);
+    });
+    list.appendChild(addRow);
+  }
+  redraw();
+}
+
+// ---------- Small UI helpers ----------
+function el(tag, attrs = {}, children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'class') node.className = v;
+    else if (k === 'style') node.setAttribute('style', v);
+    else if (k === 'value') node.value = v;
+    else node.setAttribute(k, v);
+  }
+  if (children == null) return node;
+  if (typeof children === 'string') {
+    if (tag === 'textarea') node.value = children;
+    else node.innerHTML = children;
+  } else if (Array.isArray(children)) {
+    children.forEach(c => c && node.appendChild(c));
+  }
+  return node;
+}
+function moveBtn(label, fn) {
+  const b = el('button', {}, label);
+  b.onclick = fn;
+  return b;
+}
+function delBtn(fn) {
+  const b = el('button', { class: 'del' }, 'Delete');
+  b.onclick = () => { if (confirm('Delete this?')) fn(); };
+  return b;
+}
+function imagePicker(current, onchange) {
+  const wrap = el('div', { style: 'display:flex;gap:8px' });
+  const sel = el('select', { style: 'flex:2' });
+  sel.appendChild(el('option', { value: '' }, '— pick an image —'));
+  for (const name of state.imageList) {
+    const opt = el('option', { value: 'images/' + name }, name);
+    sel.appendChild(opt);
+  }
+  const free = el('input', { type: 'text', value: current, style: 'flex:3' });
+  if (current) sel.value = current;
+  sel.onchange = () => { free.value = sel.value; onchange(sel.value); };
+  free.oninput = () => { onchange(free.value); };
+  wrap.appendChild(sel);
+  wrap.appendChild(free);
+  return wrap;
+}
+function renderSidebar() { /* no-op; full renderApp is cheap enough */ }
+
+// ---------- Save flow ----------
+async function save() {
+  if (!state.dirHandle) return;
+  try {
+    setStatus('Saving…');
+    // always write content.json (source of truth)
+    await writeFile(state.dirHandle, 'content.json', JSON.stringify(state.content, null, 2));
+
+    // regenerate only dirty pages
+    const d = state.dirty;
+    if (d.has('home')) {
+      await writeFile(state.dirHandle, 'index.html', renderHome(state.content));
+    }
+    if (d.has('contact')) {
+      await writeFile(state.dirHandle, 'contact.html', renderContact(state.content));
+    }
+    if (d.has('work')) {
+      await writeFile(state.dirHandle, 'recent-work.html', renderWork(state.content));
+    }
+    for (const key of d) {
+      if (!key.startsWith('project:')) continue;
+      const slug = key.slice(8);
+      const p = state.content.projects[slug];
+      if (!p) continue;
+      const prepared = renderizeProject(p);
+      await writeFile(state.workDir, slug + '.html', renderProject(prepared));
+    }
+
+    state.dirty.clear();
+    state.contentJsonExists = true;
+    setBanner('Saved. ' + (d.size ? d.size + ' page(s) regenerated.' : 'content.json written.'), 'ok');
+    setStatus('');
+    renderApp();
+  } catch (e) {
+    console.error(e);
+    setBanner('Save failed: ' + e.message, 'err');
+    setStatus('');
+  }
+}
+
+async function reloadFromDisk() {
+  if (!state.dirHandle) return;
+  if (state.dirty.size && !confirm('Discard unsaved changes and reload from disk?')) return;
+  const jsonText = await readFileText(state.dirHandle, 'content.json');
+  if (jsonText) {
+    state.content = JSON.parse(jsonText);
+    state.contentJsonExists = true;
+  } else {
+    state.content = await scrapeAllFromDisk();
+    state.contentJsonExists = false;
+  }
+  state.dirty.clear();
+  setBanner('Reloaded from disk.', 'ok');
+  renderApp();
+}
+
+// ---------- Banner / status ----------
+function setBanner(msg, kind) {
+  const b = document.getElementById('banner');
+  b.innerHTML = '';
+  if (!msg) return;
+  b.className = 'banner' + (kind ? ' ' + kind : '');
+  b.textContent = msg;
+}
+function setStatus(msg) {
+  document.getElementById('status').textContent = msg || '';
+}
+
+// ---------- Bootstrap ----------
+console.log('[admin] script loaded');
+
+document.getElementById('openBtn').onclick = async () => {
+  console.log('[admin] Open site folder clicked');
+  try {
+    await openFolder();
+  } catch (e) {
+    console.error('[admin] openFolder threw:', e);
+    setBanner('Open failed: ' + (e && e.message ? e.message : e) + '. See DevTools console for details.', 'err');
+  }
+};
+document.getElementById('saveBtn').onclick = save;
+document.getElementById('reloadBtn').onclick = reloadFromDisk;
+
+// Feature / context checks
+(function selfCheck() {
+  const warn = document.getElementById('iframeWarning');
+  if (!('showDirectoryPicker' in window)) {
+    setBanner('Your browser does not support the File System Access API. Use Chrome or Edge.', 'err');
+    document.getElementById('openBtn').disabled = true;
+    return;
+  }
+  const inIframe = (function () { try { return window.self !== window.top; } catch (e) { return true; } })();
+  if (inIframe) {
+    warn.innerHTML = '⚠ You are viewing this inside an embedded preview (iframe). Chrome blocks folder-picking from iframes.<br><b>Open <code>http://localhost:&lt;port&gt;/admin.html</code> in its own browser tab</b> — or right-click the preview panel and choose "Open in new tab" if that option exists.';
+  }
+  const isFileProto = location.protocol === 'file:';
+  if (isFileProto) {
+    warn.innerHTML = '⚠ You opened this as a <code>file://</code> URL. Chrome blocks the File System Access API on local files.<br>Serve the folder over localhost instead — e.g. run <code>python -m http.server</code> in the site folder and open <code>http://localhost:8000/admin.html</code>.';
+  }
+  console.log('[admin] self-check: inIframe=', inIframe, 'protocol=', location.protocol, 'showDirectoryPicker=', 'showDirectoryPicker' in window);
+})();
+</script>
+</body>
+</html>

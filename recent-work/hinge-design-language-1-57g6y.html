@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Brent Brooks</title>
+<title>HINGE - Design Language - Brent Brooks - Brent Brooks</title>
 <style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
 html{scroll-behavior:smooth}
@@ -61,22 +61,27 @@ footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;ma
   .page,.contact{padding:40px 24px 60px}
   .footer-inner{flex-direction:column}
 }</style>
-<link rel="stylesheet" href="site-fx.css"></head>
+<link rel="stylesheet" href="../site-fx.css">
+</head>
 <body>
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">BRENT BROOKS</a>
+    <a href="../index.html" class="nav-logo">BRENT BROOKS</a>
     <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="navLinks"><a href="recent-work.html">Work</a><a href="contact.html">Contact</a></div>
+    <div class="nav-links" id="navLinks"><a href="../recent-work.html" class="active">Work</a><a href="../contact.html">Contact</a></div>
   </div>
 </nav>
-<section class="hero">
-  <img class="hero-img" src="images/Hello@2x.png" alt="Hello">
-  <p class="hero-bio">I've spent my career in the space between making and leading. Building teams that are genuinely engaged and creatively ambitious, while staying close enough to the work to push it further.</p>
-<p class="hero-bio">Right now, a big part of that is helping design teams integrate AI into how they actually work. Not the hype, but the real operational shift in how we go from idea to execution. Agency-side, client-side, big brands, complex problems. What I keep coming back to is the same thing: deep empathy for the end user and a restlessness about getting it right.</p>
+<article class="page project-page">
+  <a href="../recent-work.html" class="back-link">&larr; Back to Work</a>
+  <h1>HINGE - Design Language — Brent Brooks</h1>
+  <figure class="block block-image"><img src="../images/HINGE+Banner.png" alt="HINGE - Design Language — Brent Brooks" loading="lazy"><figcaption class="block-caption"><h1>HINGE</h1>
+<h3> A global system for design and experience  across products and markets.</h3></figcaption></figure>
+<div class="block block-text"><h2>Historically, AIG has struggled to maintain consistent user interface design across its portfolio of digital products and sites. Often, individual teams created and used one-off pattern libraries and frameworks. In addition to creating confusion, this lack of continuity also generated real costs and delays in product development. </h2><h3>Launching a unified design system for a heterogeneous environment.</h3><p>The beta Hinge system launched with designers on the Experience Design (XD) team in March 2018.</p><p>In the following months our team continued to research, test and iterate incremental releases. We also socialized Hinge across the enterprise, on boarding more teams and cultivating buy-in with senior leaders. All of this culminated in a v2.0 release in December 2018.</p></div>
+<figure class="block block-image"><img src="../images/hinge+example.png" alt="HINGE - Design Language — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Quieting noise in the system.</h3><p>AIG is comprised of four legal entities, each using their own technology stack. &nbsp;To add to the noise, AIG has a loose governing structure when it comes to branding and oversight. &nbsp;With HINGE, the experience design team unified all of AIG around a single source of interface design truth.</p><p>Hinge gives teams across the business a guide and a universal toolkit composed of vanilla HTML, functional CSS, Sketch library, Axure library, Angular components, React components, and a Swift library as of now.</p></div>
+<figure class="block block-image"><img src="../images/middle+example.png" alt="HINGE - Design Language — Brent Brooks" loading="lazy"></figure>
 
-  <a href="recent-work.html" class="hero-cta">View Work</a>
-</section>
+</article>
 <footer>
   <div class="footer-inner">
     <span>&copy; 2026 Brent Brooks</span>
@@ -87,5 +92,6 @@ footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;ma
   </div>
 </footer>
 <script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}</script>
-<script src="site-fx.js"></script></body>
+<script src="../site-fx.js"></script>
+</body>
 </html>

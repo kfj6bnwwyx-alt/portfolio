@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simplified - Brent Brooks - Brent Brooks</title>
+<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-width);margin:0 auto;padding:0 40px;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text);text-decoration:none}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
+.hero{max-width:var(--max-width);margin:0 auto;padding:80px 40px 60px;text-align:center}
+.hero-img{max-width:520px;margin:0 auto 40px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:32px}
+.hero-bio{max-width:720px;margin:0 auto 18px;font-size:18px;line-height:1.7;color:var(--text-secondary)}
+.hero-cta{display:inline-block;margin-top:36px;padding:18px 48px;background:var(--accent);color:var(--white);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:opacity .2s}
+.hero-cta:hover{opacity:.85}
+.section-title{max-width:var(--max-width);margin:0 auto;padding:60px 40px 30px;font-size:28px;font-weight:700}
+.projects{max-width:var(--max-width);margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.project-card{position:relative;border-radius:6px;overflow:hidden;background:var(--card-bg);text-decoration:none;color:inherit;transition:transform .25s ease,box-shadow .25s ease}
+.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.project-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#ddd}
+.project-info{padding:18px 20px}
+.project-info h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.project-info p{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
+.page{max-width:var(--max-width);margin:0 auto;padding:60px 40px 80px}
+.page h1{font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:32px}
+.page h2{font-size:24px;font-weight:700;margin:40px 0 16px}
+.page p{font-size:17px;line-height:1.75;color:#333;margin-bottom:18px;max-width:760px}
+.page-images{display:flex;flex-direction:column;gap:24px;margin:32px 0}
+.page-images img{width:100%;border-radius:6px;background:#eee}
+.back-link{display:inline-block;margin-bottom:30px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none}
+.back-link:hover{color:var(--text)}
+.contact{max-width:var(--max-width);margin:0 auto;padding:60px 40px 100px}
+.contact h1{font-size:48px;font-weight:900;margin-bottom:30px}
+.contact-info p{font-size:17px;margin-bottom:12px;color:#333}
+.contact-info a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;margin-top:40px}
+.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-inner span{font-size:13px;color:var(--text-secondary)}
+.social-links{display:flex;gap:20px}
+.social-links a{color:var(--text-secondary);text-decoration:none;font-size:13px}
+.social-links a:hover{color:var(--text)}
+@media (max-width:900px){.projects{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;position:absolute;top:var(--nav-height);left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 40px 30px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hero{padding:50px 24px 40px}
+  .section-title{padding:40px 24px 20px}
+  .projects{grid-template-columns:1fr;padding:0 24px 60px}
+  .page,.contact{padding:40px 24px 60px}
+  .footer-inner{flex-direction:column}
+}</style>
+<link rel="stylesheet" href="../site-fx.css">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">BRENT BROOKS</a>
+    <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks"><a href="../recent-work.html" class="active">Work</a><a href="../contact.html">Contact</a></div>
+  </div>
+</nav>
+<article class="page project-page">
+  <a href="../recent-work.html" class="back-link">&larr; Back to Work</a>
+  <h1>Simplified — Brent Brooks</h1>
+  <div class="block block-text"><h1>Simplified</h1><h2>A mobile app and ecosystem for commercial insurance.</h2></div>
+<div class="block block-text"><p>The first broker-facing solution for a much larger ecosystem, was launched to London Market Casualty brokers in November 2018. At launch, the app and its underlying business structure made it easier for brokers and underwriters to do business together. Strong positive response resulted in the project being itemized by Anthony Baldwin, CEO of UK and EMEA, as one of the initial items in his 2019 budget.</p></div>
+<figure class="block block-image"><img src="../images/Simplified+header.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Problem</h3><p>Simplified began with feedback from AIG’s top broker partners. They identified lack of transparency and communication as a bottleneck in quoting, risk selection and closing new business opportunities. &nbsp;The ask “build a WhatsApp-like messaging tool” connecting brokers to underwriters.</p><p>However, my team immediately saw that a messaging tool alone wasn’t the solution.&nbsp;For one thing, willingness to use messaging apps for business was low -- broker/underwriter relationships were seen as personal. For another, much of the lack of communication stemmed from back-end processes and tools that were opaque and time-consuming for both brokers and AIG’s underwriters</p></div>
+<div class="block block-gallery"><div class="fx-slider fx-slider-static">
+<div class="fx-slide is-active"><img src="../images/Screen+Shot+2019-03-19+at+2.37.12+PM.png" alt="Example quotes from interviews" loading="lazy"><div class="fx-slide-meta"><div class="fx-slide-title">Example quotes from interviews</div></div></div>
+<div class="fx-slide"><img src="../images/Screen+Shot+2019-03-19+at+12.43.40+PM.png" alt="Experience Map for Underwriters and Brokers" loading="lazy"><div class="fx-slide-meta"><div class="fx-slide-title">Experience Map for Underwriters and Brokers</div><div class="fx-slide-desc">Overly complicated manual processes which results in less than ideal actions.</div></div></div>
+<div class="fx-slide"><img src="../images/Screen+Shot+2019-03-19+at+2.38.27+PM.png" alt="Example quotes from interviews" loading="lazy"><div class="fx-slide-meta"><div class="fx-slide-title">Example quotes from interviews</div></div></div>
+</div></div>
+<div class="block block-text"><h3>Solution</h3><p>As a result, our focus changed from making a tool that enabled easier communication to one that automated low-value tasks and freed underwriters to focus on &nbsp;building relationships with brokers and increasing sales.</p><p>Using Lean &amp; Agile methodologies, we focused on rapid rollout for&nbsp;a product that could  deliver value and transparency to brokers and lighten the load on AIG's underwriters. &nbsp;The strategy was to launch a proof of concept to galvanize the larger AIG organization around its value.</p></div>
+<figure class="block block-image"><img src="../images/Screen+Shot+2019-03-19+at+2.50.25+PM.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/Screen+Shot+2019-03-19+at+2.50.56+PM.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><p></p><h3>Results</h3><p>Within a single quarter we rolled out Simplified, version 1.0, complete with three key service improvements. </p></div>
+<figure class="block block-image"><img src="../images/quote+1.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Newsfeed</h3><p>Simplified leads with curated industry news and a personalized &nbsp;directory of contacts and support resources, making it easier for brokers to find and contact underwriters. </p></div>
+<figure class="block block-image"><img src="../images/News.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/News+AEL.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Meeting Requests and Fastpass</h3><p>Simplified connects to calendars, sorokers can request a meeting when underwriters are available. Integration with Outlook delivers these request as invites which, upon acceptance, automatically trigger a notification to reception so Brokers can be registered in the system ahead of time.</p></div>
+<figure class="block block-image"><img src="../images/Address.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/Request+Appt.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/Request+Submitted.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Products and Appetite</h3><p>Simplified includes a catalog of AIG commercial lines and key products. This lets brokers see product features and the underwriting teams that support them. And it provides valuable context, including claims scenarios &nbsp;and AIG’s business and risk goals by industry.</p></div>
+<figure class="block block-image"><img src="../images/product+pillar.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<figure class="block block-image"><img src="../images/Appetitie.png" alt="Simplified — Brent Brooks" loading="lazy"></figure>
+<div class="block block-text"><h3>Since Launch of the Proof of Concept</h3><p>Anthony Baldwin, CEO of UK and EMEA, has itemized this project as one of the initial items in his 2019 budget.</p></div>
+<div class="block block-text"><p>Team:<br>Elizabeth Heywood - Product Designer, Drew Burdick - Senior Product Designer, Kurt Flor - Producer, Amanda Cajano - Senior Producer, Brent Brooks - Head of Design</p></div>
+
+</article>
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 Brent Brooks</span>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:me@brentbrooks.com">Email</a>
+    </div>
+  </div>
+</footer>
+<script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}</script>
+<script src="../site-fx.js"></script>
+</body>
+</html>
