@@ -55,7 +55,7 @@ nav.is-scrolled {
 .fx-slider {
   position: relative;
   width: 100%;
-  max-width: min(1000px, 90vw);
+  max-width: 100%;
   max-height: 90vh;
   margin: 40px auto;
   border-radius: 8px;
@@ -198,15 +198,13 @@ nav.is-scrolled {
 .page-images img { cursor: zoom-in; transition: transform .4s ease; }
 .page-images img:hover { transform: scale(1.01); }
 
-/* ---------- Cap every content image at 90% of viewport, preserve aspect ratio ---------- */
+/* ---------- Content images: fill container width, cap height at 90vh ---------- */
 .project-page .block-image img,
 .page-images img {
-  max-width: 90vw;
+  max-width: 100%;
   max-height: 90vh;
-  width: auto;
+  width: 100%;
   height: auto;
-  margin-left: auto;
-  margin-right: auto;
   object-fit: contain;
 }
 .project-page .block-image {
@@ -216,8 +214,7 @@ nav.is-scrolled {
 }
 
 /* ---------- Project page block layout ---------- */
-.project-page .block { margin: 40px auto; max-width: 880px; }
-.project-page .block-text { max-width: 760px; }
+.project-page .block { margin: 40px auto; }
 .project-page .block-text h1,
 .project-page .block-text h2,
 .project-page .block-text h3 {
@@ -252,7 +249,6 @@ nav.is-scrolled {
   cursor: zoom-in;
   background: #eee;
 }
-.project-page .block-gallery { max-width: 1000px; }
 .project-page .block-gallery .fx-slider { margin: 0; }
 
 /* Single-image fallback gallery renders flat */
