@@ -68,6 +68,16 @@
     --leading-snug:  1.35;
     --leading-body:  1.55;
     --leading-loose: 1.65;
+
+    /* ── Motion tokens ─────────────────────────────────────────── */
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+    --dur-fast:   180ms;
+    --dur-base:   320ms;
+    --dur-slow:   520ms;
+    --dur-xslow:  800ms;
 }
 
 /* ── Base ───────────────────────────────────────────────────────────────── */
@@ -918,4 +928,134 @@ footer {
     .app-icon__tile--dairy   { background: oklch(28% 0.02 85);  color: oklch(78% 0.06 85);  }
     .app-icon__tile--meat    { background: oklch(28% 0.03 45);  color: oklch(78% 0.09 45);  }
     .app-icon__tile--pantry  { background: oklch(28% 0.02 70);  color: oklch(78% 0.06 70);  }
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────────
+   One orchestrated entrance: hero staggers in on page load. Every other
+   section waits to be scrolled into view, then reveals with a short fade +
+   translate. Hairline rules draw in from the left like a typewriter
+   carriage. Nothing bounces, nothing loops — the brand is quiet.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Hero staggered entrance — triggered by simply loading the page.
+   Each child animates its own opacity + translateY with a unique delay. */
+
+.hero__copy > * {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: rise var(--dur-slow) var(--ease-out-expo) forwards;
+}
+.hero__copy > .overline   { animation-delay: 40ms; }
+.hero__copy > .display--xxl { animation-delay: 160ms; }
+.hero__copy > .lede       { animation-delay: 320ms; }
+.hero__copy > .hero__cta  { animation-delay: 480ms; }
+
+/* The hero mockup fades + scales in slightly after the copy begins */
+.hero__mockup {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    animation: rise-scale var(--dur-xslow) var(--ease-out-expo) 240ms forwards;
+}
+
+@keyframes rise {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rise-scale {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Scroll reveals — sections start slightly lowered/faded and rise when their
+   section.reveal element crosses into view. The IntersectionObserver in
+   index.html adds .is-visible. No JS = no animation, which is a fine
+   fallback (all content remains visible). */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity var(--dur-slow) var(--ease-out-quart),
+        transform var(--dur-slow) var(--ease-out-quart);
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hairline rules: draw from left to right as the containing reveal arrives.
+   We scale along X from the left origin. 0 → 1 feels like a pen stroke.
+   For rules that aren't inside .reveal sections, the non-js fallback
+   leaves them at their natural full width. */
+
+.rule--wide {
+    transform-origin: left center;
+    transition: transform var(--dur-xslow) var(--ease-out-expo);
+}
+.reveal:not(.is-visible) .rule--wide {
+    transform: scaleX(0);
+}
+
+/* Button feedback — slightly enlarged on hover with a softer lift, compressed
+   on active for tactile ack. Replaces the previous translateY(1px). */
+
+.btn {
+    transition:
+        transform var(--dur-fast) var(--ease-out-quart),
+        background-color var(--dur-fast) var(--ease-out-quart),
+        color var(--dur-fast) var(--ease-out-quart),
+        box-shadow var(--dur-fast) var(--ease-out-quart);
+}
+.btn--primary {
+    box-shadow: 0 1px 0 0 oklch(0% 0 0 / 0.06);
+}
+.btn--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -6px oklch(15% 0.006 87 / 0.28);
+}
+.btn--primary:active {
+    transform: scale(0.97);
+    transition-duration: 80ms;
+}
+
+/* Wordmark hover — the italic sage & gives a tiny nudge.
+   The brand mnemonic should feel alive under a pointer without being cute. */
+
+.wordmark .amp {
+    display: inline-block;
+    transition: transform var(--dur-base) var(--ease-out-expo);
+    transform-origin: 50% 60%;
+}
+.wordmark:hover .amp {
+    transform: rotate(-3deg);
+}
+
+/* Respect users who opted out of motion — collapse everything to an instant. */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__copy > *,
+    .hero__mockup {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+    .reveal,
+    .reveal.is-visible {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .reveal:not(.is-visible) .rule--wide,
+    .rule--wide {
+        transform: none !important;
+    }
+    .btn:hover,
+    .btn:active,
+    .wordmark:hover .amp {
+        transform: none !important;
+    }
 }

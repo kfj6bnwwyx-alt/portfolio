@@ -117,7 +117,7 @@
         </section>
 
         <!-- Features -->
-        <section id="features" class="features" aria-labelledby="features-title">
+        <section id="features" class="features reveal" aria-labelledby="features-title">
             <div class="section__masthead">
                 <h2 id="features-title" class="section__label">What it remembers</h2>
             </div>
@@ -149,7 +149,7 @@
         </section>
 
         <!-- Manifesto -->
-        <section class="manifesto" aria-labelledby="manifesto-title">
+        <section class="manifesto reveal" aria-labelledby="manifesto-title">
             <hr class="rule rule--wide">
             <h2 id="manifesto-title" class="visually-hidden">A note from the kitchen</h2>
             <blockquote class="manifesto__quote">
@@ -165,7 +165,7 @@
         </section>
 
         <!-- How it works -->
-        <section id="how" class="how" aria-labelledby="how-title">
+        <section id="how" class="how reveal" aria-labelledby="how-title">
             <div class="section__masthead">
                 <h2 id="how-title" class="section__label">How it works</h2>
                 <p class="section__dek display--sm">Three short moves to get your household set up.</p>
@@ -197,7 +197,7 @@
         </section>
 
         <!-- FAQ -->
-        <section id="faq" class="faq" aria-labelledby="faq-title">
+        <section id="faq" class="faq reveal" aria-labelledby="faq-title">
             <div class="section__masthead">
                 <h2 id="faq-title" class="section__label">Questions</h2>
             </div>
@@ -227,7 +227,7 @@
         </section>
 
         <!-- CTA -->
-        <section id="download" class="cta" aria-labelledby="cta-title">
+        <section id="download" class="cta reveal" aria-labelledby="cta-title">
             <hr class="rule rule--wide">
             <h2 id="cta-title" class="display--xl">
                 Keep a larder <em class="amp">&amp;</em> a list.
@@ -266,5 +266,30 @@
             </div>
         </div>
     </footer>
+
+    <!-- Reveal-on-scroll observer.
+         Adds .is-visible to any .reveal element when 15% of it crosses into
+         view. Fallback: if JS is disabled or this script fails, the CSS
+         leaves everything at full opacity (see the @media reduced-motion
+         block). To be extra safe, we also promote every .reveal immediately
+         if IntersectionObserver is unavailable. -->
+    <script>
+        (function () {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('is-visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+            els.forEach(function (el) { observer.observe(el); });
+        })();
+    </script>
 </body>
 </html>
