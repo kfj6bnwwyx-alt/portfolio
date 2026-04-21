@@ -51,9 +51,9 @@
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero__grid">
                 <div class="hero__copy">
-                    <p class="overline">Vol. 1 · Issue 1 · An iOS app</p>
+                    <p class="overline">An iOS app · Beta</p>
                     <h1 id="hero-title" class="display display--xxl">
-                        For people who believe cooking is a <em>craft</em>, not a chore.
+                        Keep a larder. Keep a list. <em>Cook from both.</em>
                     </h1>
                     <p class="lede">
                         Larder <em class="amp">&amp;</em> List is a shared grocery list and recipe library for a household of two. Recipes come in from the web, your camera, or your own typing. Your list syncs between phones the moment either of you edits it.
@@ -70,48 +70,14 @@
                 </div>
 
                 <div class="hero__mockup" aria-hidden="true">
-                    <!-- CSS-drawn app icon (mirrors the actual app icon exactly) -->
-                    <div class="app-icon" aria-hidden="true">
-                        <div class="app-icon__tile app-icon__tile--produce">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 14c.5-7 6-10.5 16-10 0 7.5-4 14-10 14-4 0-6-2-6-4z"/>
-                                <path d="M4 18c3.5-3 7-5 12-6"/>
-                            </svg>
-                        </div>
-                        <div class="app-icon__tile app-icon__tile--dairy">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 3c-.5 3-5 6.5-5 11a5 5 0 0 0 10 0c0-4.5-4.5-8-5-11z"/>
-                            </svg>
-                        </div>
-                        <div class="app-icon__tile app-icon__tile--meat">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 4L3.5 19h17z"/>
-                            </svg>
-                        </div>
-                        <div class="app-icon__tile app-icon__tile--pantry">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3.5 9.5h17l-1.5 10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/>
-                                <path d="M8 7l-1 2.5"/>
-                                <path d="M16 7l1 2.5"/>
-                                <path d="M9 13v4M12 13v4M15 13v4"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- A stylized recipe card — drawn in HTML to show the editorial style -->
-                    <article class="recipe-sample" aria-hidden="true">
-                        <p class="recipe-sample__overline">Serves 4 · 35 min</p>
-                        <h2 class="recipe-sample__title">Chickpea-Lemon Orzo, Brothy</h2>
-                        <hr class="recipe-sample__rule">
-                        <div class="recipe-sample__section-label">INGREDIENTS · 7</div>
-                        <ul class="recipe-sample__list">
-                            <li><span class="qty">1 CUP</span><span>orzo pasta</span></li>
-                            <li><span class="qty">2 CANS</span><span>chickpeas, rinsed</span></li>
-                            <li><span class="qty">1</span><span>lemon, zest &amp; juice</span></li>
-                            <li><span class="qty">3 TBSP</span><span>olive oil, good</span></li>
-                            <li><span class="qty">1 CLOVE</span><span>garlic, thinly sliced</span></li>
-                        </ul>
-                    </article>
+                    <!-- Real app icon, exported from the SwiftUI artwork.
+                         Tilted slightly so it reads as an object, not a spec. -->
+                    <img
+                        src="apple-touch-icon.png"
+                        alt=""
+                        class="hero__icon"
+                        width="360"
+                        height="360">
                 </div>
             </div>
         </section>
@@ -146,22 +112,6 @@
                     </p>
                 </article>
             </div>
-        </section>
-
-        <!-- Manifesto -->
-        <section class="manifesto reveal" aria-labelledby="manifesto-title">
-            <hr class="rule rule--wide">
-            <h2 id="manifesto-title" class="visually-hidden">A note from the kitchen</h2>
-            <blockquote class="manifesto__quote">
-                <p>
-                    <span class="manifesto__mark">&ldquo;</span>We built this for a household that already cooks, not one that's being sold a lifestyle. There are no macros to optimize, no AI to plan your week, no streaks to keep. A pantry, a list, and a few recipes you come back to.<span class="manifesto__mark">&rdquo;</span>
-                </p>
-                <footer class="manifesto__byline">
-                    <hr class="rule rule--short">
-                    <cite>The Larder &amp; List kitchen</cite>
-                </footer>
-            </blockquote>
-            <hr class="rule rule--wide">
         </section>
 
         <!-- How it works -->
@@ -262,7 +212,7 @@
                 <a href="privacy.html">Privacy</a>
             </nav>
             <div class="footer__col footer__col--sign">
-                <p class="footer__mono">Vol. 1 · Iss. 1 · 2026</p>
+                <p class="footer__mono">Made slowly · 2026</p>
             </div>
         </div>
     </footer>
