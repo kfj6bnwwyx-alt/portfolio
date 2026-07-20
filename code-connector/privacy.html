@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Code Connector</title>
+  <meta name="description" content="Code Connector collects nothing. There are no servers. The app talks only to your own Mac, over your own Tailscale network. Read the full privacy model.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html" aria-label="Code Connector home">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="0.75" y="0.75" width="20.5" height="20.5" rx="5" stroke="#3d3d3d" stroke-width="1.5"/><path d="M6 7l4 4-4 4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.5" y="13.4" width="4.5" height="1.8" rx="0.4" fill="#ffffff"/></svg>
+        <span>Code&nbsp;Connector</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#security">Security</a>
+        <a href="support.html">Support</a>
+        <!-- TODO: public repo URL -->
+        <a class="is-cta" href="#" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="breadcrumb"><a href="index.html">&larr; Home</a></p>
+        <h1 style="margin-top:16px;">Privacy Policy</h1>
+        <p>Code Connector is built so that there is nothing to collect. There are no Code Connector servers, no account, and no analytics. The app talks only to your own Mac, over your own network.</p>
+        <div class="meta-line">
+          <span>Effective date: <span class="todo">TODO — set on publish</span></span>
+          <span>Contact: <span class="todo">TODO — support@yourdomain</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap prose">
+        <h2 id="summary">The short version</h2>
+        <p>The developer of Code Connector collects <strong>nothing</strong>. Code Connector has no backend of its own — no server, no database, no account system, no analytics, and no telemetry. Your code, your terminals, your files, and your notifications stay on hardware you own: your Mac and your iPhone or iPad, connected over your own private network. Apple&rsquo;s App Store &ldquo;Data Not Collected&rdquo; declaration is accurate.</p>
+
+        <h2 id="what-we-collect">Information we collect</h2>
+        <p>None. The developer operates no servers and receives no data from the app or the daemon. Specifically:</p>
+        <ul>
+          <li>We do <strong>not</strong> collect personal information, usage data, diagnostics, crash reports, or device identifiers.</li>
+          <li>We do <strong>not</strong> use analytics, advertising, tracking pixels, or third-party SDKs that phone home.</li>
+          <li>We do <strong>not</strong> have accounts, sign-in, or profiles — there is nothing to create and nothing to log in to.</li>
+        </ul>
+
+        <h2 id="architecture">How the app handles your data</h2>
+        <p>Code Connector has two parts: the <strong>iPhone/iPad app</strong> and a <strong>daemon</strong> you run on your own Mac. All data flows directly between those two, on your own network:</p>
+        <ul>
+          <li><strong>Transport is your own Tailscale tailnet.</strong> The daemon binds inside your Tailscale network; the phone reaches it by Tailscale MagicDNS or IP. This WireGuard tunnel is the encryption layer. Traffic goes device-to-Mac only — nothing transits a Code Connector server, because none exists.</li>
+          <li><strong>Terminal, file, and diff data</strong> is read from your Mac by the daemon and shown in the app on request. It is not stored or forwarded anywhere else.</li>
+          <li><strong>File and git access on the Mac</strong> is confined to an allowlist of project directories you configure, with path-traversal rejection.</li>
+        </ul>
+
+        <h2 id="authentication">Authentication and tokens</h2>
+        <ul>
+          <li><strong>Per-pairing bearer tokens.</strong> Each phone is paired with its own token, stored in the daemon&rsquo;s config on your Mac (permissions <code>0600</code>) and, on the device, in the <strong>iOS Keychain</strong>.</li>
+          <li><strong>Individually revokable.</strong> You can list and revoke any pairing at any time; the daemon hot-reloads the change within seconds, without restarting or re-pairing your other devices.</li>
+          <li>Tokens are used only to authenticate the app to your own daemon. They are never sent to the developer or any third party.</li>
+        </ul>
+
+        <h2 id="push">Push notifications</h2>
+        <p>When an agent needs a decision or finishes, your daemon sends a push notification. This is sent <strong>directly from your own Mac to Apple&rsquo;s Push Notification service (APNs)</strong> using your own APNs key — it is not routed through the developer or any intermediary. Apple processes the delivery of the notification under <a href="https://www.apple.com/legal/privacy/" rel="noopener">Apple&rsquo;s privacy policy</a>. Push is optional; everything else works without it.</p>
+
+        <h2 id="third-parties">Third-party services</h2>
+        <p>Code Connector does not integrate any third-party analytics, advertising, or data brokers. The only external services involved are ones <strong>you</strong> operate or configure:</p>
+        <ul>
+          <li><strong>Tailscale</strong> provides the encrypted network you connect over. Your use of Tailscale is governed by Tailscale&rsquo;s own terms and privacy policy.</li>
+          <li><strong>Apple Push Notification service</strong> delivers notifications your own daemon sends, as described above.</li>
+        </ul>
+
+        <h2 id="retention">Data retention</h2>
+        <p>Because the developer receives no data, there is nothing for the developer to retain or delete. Session state, tokens, and configuration live on your own Mac and device and are under your control — remove the daemon, revoke a token, or delete the app to remove them.</p>
+
+        <h2 id="children">Children&rsquo;s privacy</h2>
+        <p>Code Connector is a developer tool and is not directed at children. Since no data is collected, none is collected from anyone, including children.</p>
+
+        <h2 id="changes">Changes to this policy</h2>
+        <p>If this policy changes, the updated version will be posted here with a new effective date. Because the product collects no data, changes are expected to be clarifications rather than expansions of data use.</p>
+
+        <h2 id="contact">Contact</h2>
+        <p>Questions about this policy can be sent to <span class="todo">TODO — support@yourdomain</span>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" aria-label="Code Connector home">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="0.75" y="0.75" width="20.5" height="20.5" rx="5" stroke="#3d3d3d" stroke-width="1.5"/><path d="M6 7l4 4-4 4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.5" y="13.4" width="4.5" height="1.8" rx="0.4" fill="#ffffff"/></svg>
+            <span>Code&nbsp;Connector</span>
+          </a>
+          <p class="footer__note">Self-hosted &amp; open. No cloud, no middleman — your Mac, your network, your data.</p>
+        </div>
+        <div class="footer__cols">
+          <div class="footer__col">
+            <h4>Product</h4>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#security">Security</a>
+            <a href="index.html#setup">Setup</a>
+          </div>
+          <div class="footer__col">
+            <h4>Resources</h4>
+            <a href="privacy.html">Privacy</a>
+            <a href="support.html">Support</a>
+            <a href="press.html">Press</a>
+          </div>
+          <div class="footer__col">
+            <h4>Source</h4>
+            <!-- TODO: public repo URL -->
+            <a href="#" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; <span id="year">2026</span> Code Connector</span>
+        <span>Made for developers, device-to-Mac only.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

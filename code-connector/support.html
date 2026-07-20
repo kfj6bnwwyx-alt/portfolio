@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support &amp; FAQ — Code Connector</title>
+  <meta name="description" content="Getting started, Tailscale requirements, privacy, multiple devices, revoking access, supported agents, cost, and connection troubleshooting for Code Connector.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html" aria-label="Code Connector home">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="0.75" y="0.75" width="20.5" height="20.5" rx="5" stroke="#3d3d3d" stroke-width="1.5"/><path d="M6 7l4 4-4 4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.5" y="13.4" width="4.5" height="1.8" rx="0.4" fill="#ffffff"/></svg>
+        <span>Code&nbsp;Connector</span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#security">Security</a>
+        <a href="privacy.html">Privacy</a>
+        <!-- TODO: public repo URL -->
+        <a class="is-cta" href="#" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <p class="breadcrumb"><a href="index.html">&larr; Home</a></p>
+        <h1 style="margin-top:16px;">Support</h1>
+        <p>Getting started, how the pieces fit, and answers to the questions that come up most. Still stuck? Reach out — contact below.</p>
+      </div>
+    </section>
+
+    <!-- Getting started -->
+    <section class="section section--tight">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Getting started</p>
+          <h2>Three steps to connected.</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <span class="step__n">1</span>
+            <h3>Install the daemon</h3>
+            <p>On your Mac, run the menu-bar app or <code>npx code-connector</code>. It needs Node&nbsp;&ge;&nbsp;20 and Tailscale.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">2</span>
+            <h3>Scan the pairing QR</h3>
+            <p>The Mac shows a pairing QR. Scan it with the iPhone app to mint this device&rsquo;s revokable token.</p>
+          </div>
+          <div class="step">
+            <span class="step__n">3</span>
+            <h3>Work from anywhere</h3>
+            <p>Your sessions appear. Approve, watch, and review from anywhere on your tailnet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions.</h2>
+        </div>
+        <div class="faq">
+
+          <details>
+            <summary>How do I set it up?</summary>
+            <p>Two parts. On your Mac, install the daemon — either the native menu-bar app or <code>npx code-connector</code> — which needs Node&nbsp;&ge;&nbsp;20 and Tailscale. It walks you through Tailscale if it isn&rsquo;t up yet, wires the Claude Code hooks, and ends with a pairing QR. On your iPhone or iPad, open Code Connector and scan that QR (or tap Connect on your Mac&rsquo;s card). Your sessions then appear.</p>
+          </details>
+
+          <details>
+            <summary>Do I really need Tailscale?</summary>
+            <p>Yes, by default. Tailscale (WireGuard) is both the transport and the encryption layer — the app&harr;daemon traffic itself is plain HTTP/WS, so the encrypted tunnel is what protects it. The daemon binds to its Tailscale address, and the phone reaches it there, so both discovery paths ride the same encrypted tunnel. That&rsquo;s why it&rsquo;s required, not merely recommended. Install the Tailscale app on the phone under the same account and keep it connected.</p>
+          </details>
+
+          <details>
+            <summary>Is my code private?</summary>
+            <p>Yes. There is no Code Connector cloud, account, analytics, or telemetry. The app talks only to your own Mac, over your own Tailscale network, device-to-Mac. Nothing about your code, terminals, or notifications transits a Code Connector server — because there isn&rsquo;t one. Push notifications are sent by your own daemon directly to Apple&rsquo;s push service using your own APNs key. Pairing tokens live in the iOS Keychain. See the <a href="privacy.html">Privacy Policy</a> for the full model.</p>
+          </details>
+
+          <details>
+            <summary>Can I pair more than one device?</summary>
+            <p>Yes — mint one pairing token per phone or iPad, and revoke any of them individually. One thing to note: push notifications go to a single APNs device token, so only the most recently paired phone receives pushes. All paired devices can still connect, watch, and review.</p>
+          </details>
+
+          <details>
+            <summary>How do I revoke a device&rsquo;s access?</summary>
+            <p>Each pairing has its own bearer token. List and revoke them from the daemon (for example, <code>npm run tokens -- list</code> and <code>npm run tokens -- revoke</code>). The daemon hot-reloads the change within about five seconds — no restart, and no re-pairing of your other devices.</p>
+          </details>
+
+          <details>
+            <summary>Which agents work with it?</summary>
+            <p>Claude Code is the first-class, zero-config integration and is wired automatically. Any other CLI agent — Codex, Aider, or a bare shell — works too: it&rsquo;s surfaced through a generic hook system and tagged by its source name. Note that an agent running in a desk terminal <em>outside</em> a Code Connector tmux session won&rsquo;t generate status updates or pushes.</p>
+          </details>
+
+          <details>
+            <summary>What does it cost?</summary>
+            <p>There is no subscription and no Code Connector account. You own the daemon, the network, and the data. Tailscale has its own free and paid tiers, and sending push notifications requires a paid Apple Developer account plus a one-time APNs key setup — everything else works without it.</p>
+          </details>
+
+          <details>
+            <summary>The app can&rsquo;t connect to my Mac. What should I check?</summary>
+            <ul>
+              <li><strong>Tailscale is up on both ends.</strong> The Mac and the phone must be signed into the same tailnet and connected.</li>
+              <li><strong>The Mac is awake and reachable.</strong> The daemon can&rsquo;t wake a sleeping machine — keep the Mac awake, or use a keep-awake option.</li>
+              <li><strong>The daemon is running.</strong> Start it from the menu-bar app, or check your <code>npx code-connector</code> process.</li>
+              <li><strong>The pairing is still valid.</strong> If you revoked this device&rsquo;s token, re-pair by scanning a fresh QR.</li>
+              <li><strong>MagicDNS.</strong> Pairing prefers the Tailscale MagicDNS name and falls back to the raw Tailscale IP automatically if the name can&rsquo;t resolve on the phone.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>Can I edit files or commit from the phone?</summary>
+            <p>Not directly — by design. The file browser and diffs are read-only. To change anything, you ask the agent to do it in the session. The phone is a window into your Mac, not a second editor.</p>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section section--tight security">
+      <div class="wrap">
+        <div class="section-head section-head--center" style="margin-bottom:0;">
+          <p class="eyebrow">Contact</p>
+          <h2>Still need a hand?</h2>
+          <p>Email <span class="todo">TODO — support@yourdomain</span>, or open an issue on the <!-- TODO: public repo URL --><a href="#" rel="noopener" style="color:var(--text);text-decoration:underline;text-underline-offset:3px;">project&rsquo;s GitHub</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" aria-label="Code Connector home">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="0.75" y="0.75" width="20.5" height="20.5" rx="5" stroke="#3d3d3d" stroke-width="1.5"/><path d="M6 7l4 4-4 4" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="11.5" y="13.4" width="4.5" height="1.8" rx="0.4" fill="#ffffff"/></svg>
+            <span>Code&nbsp;Connector</span>
+          </a>
+          <p class="footer__note">Self-hosted &amp; open. No cloud, no middleman — your Mac, your network, your data.</p>
+        </div>
+        <div class="footer__cols">
+          <div class="footer__col">
+            <h4>Product</h4>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#security">Security</a>
+            <a href="index.html#setup">Setup</a>
+          </div>
+          <div class="footer__col">
+            <h4>Resources</h4>
+            <a href="privacy.html">Privacy</a>
+            <a href="support.html">Support</a>
+            <a href="press.html">Press</a>
+          </div>
+          <div class="footer__col">
+            <h4>Source</h4>
+            <!-- TODO: public repo URL -->
+            <a href="#" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; <span id="year">2026</span> Code Connector</span>
+        <span>Made for developers, device-to-Mac only.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
