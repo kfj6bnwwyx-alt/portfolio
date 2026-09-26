@@ -12,43 +12,32 @@
     if (sessionStorage.getItem(KEY) === "1") return;
   } catch (e) { /* sessionStorage unavailable — still show gate */ }
 
-  // Warm the brand font before the gate paints. A pre-paint gate can't fully
-  // guarantee no swap, but preconnect + preload makes the fallback flash
-  // negligible instead of a visible reflow.
-  var head = document.head || document.documentElement;
-  [["preconnect", "https://fonts.googleapis.com", false],
-   ["preconnect", "https://fonts.gstatic.com", true]].forEach(function (p) {
-    var l = document.createElement("link");
-    l.rel = p[0]; l.href = p[1]; if (p[2]) l.crossOrigin = "anonymous";
-    head.appendChild(l);
-  });
-  var pre = document.createElement("link");
-  pre.rel = "preload"; pre.as = "style";
-  pre.href = "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap";
-  head.appendChild(pre);
-
   var style = document.createElement("style");
   style.textContent =
     'html.bb-locked,body.bb-locked{overflow:hidden!important}' +
-    '#bb-gate{position:fixed;inset:0;z-index:2147483647;background:#f3f3f1;' +
-    'display:flex;align-items:center;justify-content:center;' +
-    "font-family:'Bricolage Grotesque',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#15161a}" +
-    '#bb-gate .bb-box{width:100%;max-width:392px;padding:44px;border:1px solid #d4d4cf;background:#f3f3f1}' +
-    '#bb-gate .bb-kicker{font-size:13px;font-weight:600;color:#6b6a64;display:block;margin:0 0 14px}' +
-    '#bb-gate h1{font-size:38px;font-weight:600;letter-spacing:-.025em;margin:0 0 6px;line-height:1.02}' +
-    '#bb-gate p{font-size:15px;color:#2e2f33;margin:0 0 28px;line-height:1.55}' +
-    '#bb-gate .bb-sub{font-size:15px;font-weight:600;color:#15161a;margin:0 0 22px}' +
-    '#bb-gate input{width:100%;padding:13px 14px;border:1px solid #d4d4cf;border-radius:0;' +
-    'font-size:15px;margin:0 0 12px;background:#faf9f6;box-sizing:border-box;font-family:inherit}' +
-    '#bb-gate input:focus{outline:none;border-color:#8a2a1f}' +
-    '#bb-gate button{width:100%;padding:14px;background:#8a2a1f;color:#f3f3f1;border:none;border-radius:0;' +
-    "font-family:inherit;font-size:15px;font-weight:600;letter-spacing:0;cursor:pointer;transition:background 160ms ease}" +
-    '#bb-gate button:hover{background:#6f2018}' +
-    '#bb-gate button:focus-visible{outline:2px solid #8a2a1f;outline-offset:2px}' +
-    '#bb-gate .bb-err{display:none;color:#6f2018;font-size:13px;margin-top:14px}' +
+    '#bb-gate{position:fixed;inset:0;z-index:2147483647;background:#ffffff;' +
+    'display:flex;align-items:center;justify-content:center;padding:16px;' +
+    "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0d0d0d;" +
+    '-webkit-font-smoothing:antialiased}' +
+    '#bb-gate .bb-box{width:100%;max-width:400px;padding:40px;border-radius:5px;background:#f4f4f6}' +
+    '#bb-gate .bb-kicker{font-size:14px;color:#6e6e80;display:block;margin:0 0 8px}' +
+    '#bb-gate h1{font-size:32px;font-weight:600;letter-spacing:-.02em;margin:0 0 4px;line-height:1.2}' +
+    '#bb-gate p{font-size:16px;color:#5d5d6b;margin:0 0 24px;line-height:1.5}' +
+    '#bb-gate .bb-sub{font-size:14px;color:#6e6e80;margin:0 0 24px}' +
+    '#bb-gate input{width:100%;min-height:44px;padding:0 16px;border:1px solid #e5e5ea;border-radius:5px;' +
+    'font-size:16px;margin:0 0 8px;background:#ffffff;color:#0d0d0d;box-sizing:border-box;font-family:inherit;' +
+    'transition:border-color 400ms ease}' +
+    '#bb-gate input:focus{outline:none;border-color:#0d0d0d}' +
+    '#bb-gate button{width:100%;min-height:44px;background:#0d0d0d;color:#ffffff;border:none;border-radius:999px;' +
+    "font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:opacity 400ms ease}" +
+    '#bb-gate button:hover{opacity:.8}' +
+    '#bb-gate button:focus-visible{outline:2px solid #0d0d0d;outline-offset:2px}' +
+    '#bb-gate .bb-err{display:none;color:#b42318;font-size:14px;margin-top:16px}' +
     '#bb-gate.bad .bb-err{display:block}' +
-    '#bb-gate .bb-ask{font-size:13px;color:#6b6a64;margin:18px 0 0}' +
-    '#bb-gate .bb-ask a{color:#8a2a1f;text-decoration:underline;text-underline-offset:3px}';
+    '#bb-gate.bad input{border-color:#b42318}' +
+    '#bb-gate .bb-ask{font-size:14px;color:#6e6e80;margin:24px 0 0}' +
+    '#bb-gate .bb-ask a{color:#0d0d0d;text-decoration:underline;text-decoration-color:#8e8ea0;text-underline-offset:4px}' +
+    '@media (prefers-reduced-motion:reduce){#bb-gate *{transition:none!important}}';
   (document.head || document.documentElement).appendChild(style);
 
   function build() {
