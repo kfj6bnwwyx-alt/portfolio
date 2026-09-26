@@ -100,22 +100,30 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   top: 0;
   z-index: 10;
 }
-/* Frosted fade: 85% white + 20px blur at the viewport edge, both easing
-   to nothing at the bar's bottom. Full-bleed across the viewport. */
-.topbar::before {
+/* Frosted fade, full-bleed. Two layers so each fades on its own curve:
+   ::before = 20px blur, full strength behind the whole bar, easing out
+              over the 24px just below it (a mask over the full height
+              would leave the nav text sitting on barely-blurred content);
+   ::after  = white tint, 85% at the viewport edge fading to 0%. */
+.topbar::before,
+.topbar::after {
   content: '';
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: -24px;
   left: calc(50% - 50vw);
   width: 100vw;
   z-index: -1;
   pointer-events: none;
-  background: rgb(255 255 255 / .85);
+}
+.topbar::before {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
-  mask-image: linear-gradient(to bottom, #000, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+}
+.topbar::after {
+  background: linear-gradient(to bottom, rgb(255 255 255 / .85), rgb(255 255 255 / 0));
 }
 .topbar-inner {
   display: flex;
