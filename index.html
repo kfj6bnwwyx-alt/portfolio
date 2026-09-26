@@ -1,91 +1,128 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Brent Brooks</title>
-<style>*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f0efed;--text:#1a1a1a;--text-secondary:#666;--accent:#1a1a1a;--white:#fff;--border:#d4d4d4;--card-bg:#e0dfdd;--max-width:1140px;--nav-height:80px}
-html{scroll-behavior:smooth}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:inherit}
-nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:var(--max-width);margin:0 auto;padding:0 40px;height:var(--nav-height);display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-size:14px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text);text-decoration:none}
-.nav-links{display:flex;gap:32px}
-.nav-links a{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;transition:color .2s}
-.nav-links a:hover,.nav-links a.active{color:var(--text)}
-.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
-.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s}
-.hero{max-width:var(--max-width);margin:0 auto;padding:80px 40px 60px;text-align:center}
-.hero-img{width:100%;max-width:520px;height:auto;margin:0 auto 40px}
-.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:32px}
-.hero-bio{max-width:720px;margin:0 auto 18px;font-size:18px;line-height:1.7;color:var(--text-secondary)}
-.hero-cta{display:inline-block;margin-top:36px;padding:18px 48px;background:var(--accent);color:var(--white);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:opacity .2s}
-.hero-cta:hover{opacity:.85}
-.section-title{max-width:var(--max-width);margin:0 auto;padding:60px 40px 30px;font-size:28px;font-weight:700}
-.projects{max-width:var(--max-width);margin:0 auto;padding:0 40px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.project-card{position:relative;border-radius:6px;overflow:hidden;background:var(--card-bg);text-decoration:none;color:inherit;transition:transform .25s ease,box-shadow .25s ease}
-.project-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
-.project-thumb{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#ddd}
-.project-info{padding:18px 20px}
-.project-info h3{font-size:15px;font-weight:600;margin-bottom:4px}
-.project-info p{font-size:12px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px}
-.page{max-width:var(--max-width);margin:0 auto;padding:60px 40px 80px}
-.page h1{font-size:clamp(36px,5vw,56px);font-weight:900;letter-spacing:-1px;margin-bottom:32px}
-.page h2{font-size:24px;font-weight:700;margin:40px 0 16px}
-.page p{font-size:17px;line-height:1.75;color:#333;margin-bottom:18px;max-width:760px}
-.page-images{display:flex;flex-direction:column;gap:24px;margin:32px 0}
-.page-images img{width:100%;border-radius:6px;background:#eee}
-.back-link{display:inline-block;margin-bottom:30px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-secondary);text-decoration:none}
-.back-link:hover{color:var(--text)}
-.contact{max-width:var(--max-width);margin:0 auto;padding:60px 40px 100px}
-.contact h1{font-size:48px;font-weight:900;margin-bottom:30px}
-.contact-info p{font-size:17px;margin-bottom:12px;color:#333}
-.contact-info a{color:var(--text);text-decoration:underline;text-underline-offset:3px}
-footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center;margin-top:40px}
-.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-inner span{font-size:13px;color:var(--text-secondary)}
-.social-links{display:flex;gap:20px}
-.social-links a{color:var(--text-secondary);text-decoration:none;font-size:13px}
-.social-links a:hover{color:var(--text)}
-@media (max-width:900px){.projects{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:768px){
-  .nav-toggle{display:block}
-  .nav-links{display:none;position:absolute;top:var(--nav-height);left:0;right:0;background:var(--bg);flex-direction:column;padding:20px 40px 30px;border-bottom:1px solid var(--border)}
-  .nav-links.open{display:flex}
-  .hero{padding:50px 24px 40px}
-  .section-title{padding:40px 24px 20px}
-  .projects{grid-template-columns:1fr;padding:0 24px 60px}
-  .page,.contact{padding:40px 24px 60px}
-  .footer-inner{flex-direction:column}
-}</style>
-<link rel="stylesheet" href="site-fx.css"></head>
+<title>Brent Brooks, Designer and Design Leader</title>
+<link rel="stylesheet" href="site.css">
+<script src="gate.js"></script>
+</head>
 <body>
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">BRENT BROOKS</a>
-    <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="navLinks"><a href="recent-work.html">Work</a><a href="contact.html">Contact</a></div>
-  </div>
-</nav>
-<section class="hero">
-  <img class="hero-img" src="images/Hello@2x.png" alt="Hello">
-  <p class="hero-bio">I've spent my career in the space between making and leading. Building teams that are genuinely engaged and creatively ambitious, while staying close enough to the work to push it further.</p>
-<p class="hero-bio">Right now, a big part of that is helping design teams integrate AI into how they actually work. Not the hype, but the real operational shift in how we go from idea to execution. Agency-side, client-side, big brands, complex problems. What I keep coming back to is the same thing: deep empathy for the end user and a restlessness about getting it right.</p>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site">
 
-  <a href="recent-work.html" class="hero-cta">View Work</a>
-</section>
-<footer>
-  <div class="footer-inner">
-    <span>&copy; 2026 Brent Brooks</span>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:me@brentbrooks.com">Email</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand"><span class="brand-name-large">Brent Brooks</span></a>
+      <nav class="nav">
+        <a href="recent-work.html" class="nav-link"><span class="nav-label">Work</span></a>
+        <a href="contact.html" class="nav-link"><span class="nav-label">Contact</span></a>
+      </nav>
     </div>
-  </div>
-</footer>
-<script>function toggleNav(){document.getElementById("navLinks").classList.toggle("open")}</script>
-<script src="site-fx.js"></script></body>
+  </header>
+
+  <main class="page page-home" id="main">
+    <section class="hero-mo">
+      <h1 class="hero-mo-h">Between making<br>and leading.<br><span class="hero-mo-h-dim">Design that<br>gets it right.</span></h1>
+      <div class="hero-mo-meta">
+        <p>My career has lived in that gap. I build teams that are engaged and creatively ambitious, and I stay close enough to the work to push it further.</p>
+        <p>Right now I'm leading four platforms at BNY and helping rethink what AI-first means for product designers. Not the hype, the real operational shift from idea to execution. Before that: a startup pod inside JPMorgan, product and design leadership at Clear Street, design systems across AIG, agency-side and client-side. It always comes back to the same thing: deep empathy for the end user, and refusing to stop short.</p>
+      </div>
+    </section>
+
+    <section class="facts">
+      <span class="fact"><span class="fact-k">Based</span> New York, NY</span>
+      <span class="fact"><span class="fact-k">Practice</span> Product, UX, Design Systems, Campaign</span>
+      <span class="fact"><span class="fact-k">Email</span> <a href="mailto:me@brentbrooks.com">me@brentbrooks.com</a></span>
+      <span class="fact"><span class="fact-k">LinkedIn</span> <a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">in/brentbillbrooks</a></span>
+    </section>
+
+    <section class="selected">
+      <div class="selected-head">
+        <h2 class="selected-title">Selected work</h2>
+        <a class="selected-all" href="recent-work.html">All 15 projects <span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="worklist">
+        <li class="work work-lead">
+          <a href="recent-work/client-portal-f2epd.html">
+            <figure class="work-fig">
+              <img src="images/Macbook+Air+(2022)@2x.png" alt="Client Portal: on-demand institutional portfolio reporting, shown on a laptop" loading="lazy">
+            </figure>
+            <div class="work-body">
+              <h3 class="work-title">Client Portal</h3>
+              <p class="work-meta">Product Design<span class="dot">·</span>Clear Street</p>
+              <span class="work-go" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+        <li class="work">
+          <a href="recent-work/project-x-cczma.html">
+            <figure class="work-fig">
+              <img src="images/MacBook+Pro+14_+-+1@2x.png" alt="Bank of America enterprise app, product design, shown on a laptop" loading="lazy">
+            </figure>
+            <div class="work-body">
+              <h3 class="work-title">Bank of America Enterprise App</h3>
+              <p class="work-meta">Product Design</p>
+              <span class="work-go" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+        <li class="work">
+          <a href="recent-work/simplified-bdzat.html">
+            <figure class="work-fig">
+              <img src="images/Simplified+header.png" alt="Simplified: AIG product design, header concept" loading="lazy">
+            </figure>
+            <div class="work-body">
+              <h3 class="work-title">Simplified</h3>
+              <p class="work-meta">Product Design<span class="dot">·</span>AIG</p>
+              <span class="work-go" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+        <li class="work">
+          <a href="recent-work/service-genie-2rrgt.html">
+            <figure class="work-fig">
+              <img src="images/ServiceGenie_white-kitchen-counter.png" alt="Service Genie: AIG voice and UI concept, kitchen-counter scene" loading="lazy">
+            </figure>
+            <div class="work-body">
+              <h3 class="work-title">Service Genie</h3>
+              <p class="work-meta">UI / UX<span class="dot">·</span>AIG</p>
+              <span class="work-go" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+        <li class="work">
+          <a href="recent-work/hinge-design-language-1-57g6y.html">
+            <figure class="work-fig">
+              <img src="images/HINGE+Banner.png" alt="HINGE: AIG design language system, identity banner" loading="lazy">
+            </figure>
+            <div class="work-body">
+              <h3 class="work-title">HINGE, Design Language</h3>
+              <p class="work-meta">Design Systems<span class="dot">·</span>AIG</p>
+              <span class="work-go" aria-hidden="true">→</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="closing">
+      <p class="closing-line">Building a design team, or rebuilding how one works with AI? That is the work I want.</p>
+      <a class="closing-cta" href="contact.html">Get in touch <span aria-hidden="true">&rarr;</span></a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-row">
+      <span>© 2026 Brent Brooks</span>
+      <span><a href="https://www.linkedin.com/in/brentbillbrooks" target="_blank" rel="noopener">LinkedIn ↗</a></span>
+      <span><a href="mailto:me@brentbrooks.com">me@brentbrooks.com</a></span>
+    </div>  </footer>
+
+</div>
+<script>
+  console.log('%cBrent Brooks', 'font:600 16px/1.2 sans-serif;color:#0d0d0d');
+  console.log('You opened the console. People who do tend to be the ones I like working with. me@brentbrooks.com');
+</script>
+</body>
 </html>

@@ -1,0 +1,74 @@
+{
+  "projectId": "876ab39b-eb1d-41b3-8397-8115aebddab9",
+  "shape": "package",
+  "pkg": "@brentbrooks/ds",
+  "globalName": "BrentBrooksDS",
+  "buildCmd": "cd design-system && npm run build",
+  "entry": "./design-system/dist/index.js",
+  "cssEntry": "dist/styles.css",
+  "provider": {
+    "component": "Site"
+  },
+  "docsDir": "../.design-sync/docs",
+  "overrides": {
+    "Site": {
+      "cardMode": "column",
+      "viewport": "900x1400"
+    },
+    "Topbar": {
+      "cardMode": "column"
+    },
+    "Footer": {
+      "cardMode": "column"
+    },
+    "Hero": {
+      "cardMode": "column"
+    },
+    "Facts": {
+      "cardMode": "column"
+    },
+    "SelectedWork": {
+      "cardMode": "column",
+      "viewport": "900x1400"
+    },
+    "WorkCard": {
+      "cardMode": "column"
+    },
+    "Closing": {
+      "cardMode": "column"
+    },
+    "FilterChips": {
+      "cardMode": "column"
+    },
+    "ProjectList": {
+      "cardMode": "column"
+    },
+    "ProjectRow": {
+      "cardMode": "column"
+    },
+    "CaseHeader": {
+      "cardMode": "column"
+    },
+    "CaseBody": {
+      "cardMode": "column",
+      "viewport": "900x1400"
+    },
+    "TextBlock": {
+      "cardMode": "column"
+    },
+    "Principles": {
+      "cardMode": "column"
+    },
+    "ImageBlock": {
+      "cardMode": "column"
+    },
+    "Gallery": {
+      "cardMode": "column",
+      "viewport": "900x1400"
+    },
+    "NextProject": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

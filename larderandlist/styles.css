@@ -892,17 +892,14 @@ footer {
    index.html adds .is-visible. No JS = no animation, which is a fine
    fallback (all content remains visible). */
 
-/* Only hide reveal sections when JS is confirmed running (see the inline
-   `.js` script in <head>). Without JS the observer can never reveal them, so
-   they must stay visible — hence the `.js` scope rather than a bare `.reveal`. */
-.js .reveal {
+.reveal {
     opacity: 0;
     transform: translateY(16px);
     transition:
         opacity var(--dur-slow) var(--ease-out-quart),
         transform var(--dur-slow) var(--ease-out-quart);
 }
-.js .reveal.is-visible {
+.reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
@@ -916,7 +913,7 @@ footer {
     transform-origin: left center;
     transition: transform var(--dur-xslow) var(--ease-out-expo);
 }
-.js .reveal:not(.is-visible) .rule--wide {
+.reveal:not(.is-visible) .rule--wide {
     transform: scaleX(0);
 }
 

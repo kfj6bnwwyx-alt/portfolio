@@ -5,3 +5,15 @@
 .DS_Store
 Thumbs.db
 *.swp
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json
+
+# design-sync (regenerated / machine state)
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.design-sync/*.log
