@@ -1,7 +1,7 @@
 ---
 version: 0.1
 name: Brent Brooks Portfolio
-description: "Quiet, flat, light interface. Near-black on white, one cool-gray accent, system type, 8px grid, uniform 400ms motion."
+description: "Quiet, flat, light interface. Near-black on white, one cool-gray accent, Geist type, 8px grid, uniform 400ms motion."
 implementation: site.css (+ gate.js for the password screen)
 
 colors:
@@ -18,7 +18,7 @@ colors:
   on-action: "#ffffff"
 
 typography:
-  fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+  fontFamily: "Geist, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
   fontFamilyMono: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
   display:    { fontSize: 48px, fontWeight: 600, lineHeight: 1.2, letterSpacing: -0.02em }
   hero:       { fontSize: "clamp(40px, 6vw, 64px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: -0.02em }
@@ -52,7 +52,7 @@ breakpoints: [768px]
 
 **Let the work be the color.** The chrome is near-black, white, and cool gray so that project imagery carries all the chroma on the page.
 
-**Type does the hierarchy.** One system font stack. Hierarchy comes from size and weight (600 for headings, 500 for labels, 400 for copy) — never uppercase tracking or color alone.
+**Type does the hierarchy.** One typeface: Geist (variable, loaded from Google Fonts), falling back to the system stack. Hierarchy comes from size and weight (600 for headings, 500 for labels, 400 for copy) — never uppercase tracking or color alone.
 
 **Calm, predictable motion.** One duration (400ms), one curve (`ease`). Motion confirms state; it never performs. Honors `prefers-reduced-motion`.
 

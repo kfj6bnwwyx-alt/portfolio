@@ -17,7 +17,7 @@
     'html.bb-locked,body.bb-locked{overflow:hidden!important}' +
     '#bb-gate{position:fixed;inset:0;z-index:2147483647;background:#ffffff;' +
     'display:flex;align-items:center;justify-content:center;padding:16px;' +
-    "font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0d0d0d;" +
+    "font-family:'Geist',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0d0d0d;" +
     '-webkit-font-smoothing:antialiased}' +
     '#bb-gate .bb-box{width:100%;max-width:400px;padding:40px;border-radius:5px;background:#f4f4f6}' +
     '#bb-gate .bb-kicker{font-size:14px;color:#6e6e80;display:block;margin:0 0 8px}' +
