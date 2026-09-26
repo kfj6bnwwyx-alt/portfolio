@@ -100,27 +100,52 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   top: 0;
   z-index: 10;
 }
-/* Frosted fade, full-bleed. Two layers so each fades on its own curve:
-   ::before = 20px blur, full strength behind the whole bar, easing out
-              over the 24px just below it (a mask over the full height
-              would leave the nav text sitting on barely-blurred content);
-   ::after  = white tint, 85% at the viewport edge fading to 0%. */
+/* Frosted fade, full-bleed: blur and tint both fade in toward the top.
+   Progressive blur = four stacked layers (2.5 → 5 → 10 → 20px), each masked
+   to a shorter band from the top, so blur builds from 0 at the bottom edge
+   to 20px at the viewport edge, all within the 64px bar. (One masked 20px layer only fades its
+   opacity, which reads as sharp content under a haze.) Tint sits on top:
+   85% white at the edge → 0%. The layers ride on existing topbar elements'
+   pseudos — all absolutely positioned against .topbar, painted in tree
+   order: topbar::before, topbar-inner::before, nav::before,
+   topbar-inner::after, topbar::after. */
 .topbar::before,
-.topbar::after {
+.topbar::after,
+.topbar-inner::before,
+.topbar-inner::after,
+.nav::before {
   content: '';
   position: absolute;
   top: 0;
-  bottom: -24px;
+  bottom: 0; /* stays inside the 64px bar */
   left: calc(50% - 50vw);
   width: 100vw;
   z-index: -1;
   pointer-events: none;
 }
 .topbar::before {
+  -webkit-backdrop-filter: blur(2.5px);
+  backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+.topbar-inner::before {
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 80%);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent 80%);
+}
+.nav::before {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 20%, transparent 60%);
+  mask-image: linear-gradient(to bottom, #000 20%, transparent 60%);
+}
+.topbar-inner::after {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 24px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 40%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 40%);
 }
 .topbar::after {
   background: linear-gradient(to bottom, rgb(255 255 255 / .85), rgb(255 255 255 / 0));
