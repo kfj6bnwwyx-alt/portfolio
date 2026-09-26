@@ -60,6 +60,8 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: var(--color-bg); color: var(--color-text); }
+/* the full-bleed topbar layer is 100vw wide; clip (not hidden) keeps sticky working */
+html { overflow-x: clip; }
 body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
@@ -97,7 +99,23 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--color-bg);
+}
+/* Frosted fade: 85% white + 20px blur at the viewport edge, both easing
+   to nothing at the bar's bottom. Full-bleed across the viewport. */
+.topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  z-index: -1;
+  pointer-events: none;
+  background: rgb(255 255 255 / .85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
 }
 .topbar-inner {
   display: flex;
