@@ -11,6 +11,10 @@
 - `.closing-cta` needed `width: fit-content` (added to `site.css`): in a flex column the Button stretched to full width.
 - Every component except Button uses `cardMode: column`. SelectedWork, Site, CaseBody and Gallery also need `viewport: 900x1400`, because at the default 700px their compositions are cut off.
 
+## Re-sync log
+- 2026-09-26 (re-sync 1): styling-only (Geist + frosted topbar). Diff: 19 verified-by-upload, 0 changed; upload = styling + README. Updated the "system font" claim in conventions.md to Geist (user-approved). Contact sheets eyeballed: Geist renders in every card.
+- The local `ds-bundle/_ds_sync.json` equals the uploaded anchor right after an upload, so it can be copied to `.design-sync/.cache/remote-sync.json` without a `get_file` round-trip, provided no rebuild has happened since. Check `bundleSha12` to confirm.
+
 ## Known render warns
 - None outstanding. (`[GRID_OVERFLOW]` on Hero was resolved by `cardMode: column`.)
 
@@ -19,3 +23,5 @@
 - **site.css drift:** styling changes don't invalidate grades (by design). After any visual change to `site.css`, eyeball the contact sheets, because carried-forward grades won't catch it.
 - **Markup drift:** if a live page's HTML structure changes (class names), update the matching component in `design-system/src/components/` to emit the same markup, or the design agent will build things that don't match the site.
 - `gate.js` (password overlay) is intentionally not a component.
+- **Remote font:** Geist loads from Google Fonts via the `@import` at the top of `site.css` (validate prints `[FONT_REMOTE]`, which is expected). If that import is removed or moved below other rules, designs silently fall back to the system font.
+- **Two deploy repos:** production deploys from `kfj6bnwwyx-alt/portfolio-vercel`, not this repo. A `site.css` change must land in both, or the design system and the live site drift apart.

@@ -1,6 +1,6 @@
 # Brent Brooks design system — how to build with it
 
-Quiet, flat, light: near-black on white, cool grays, system font, 8px grid, pill actions, no shadows. Every component emits the real brentbrooks.com markup and is styled by the site's own stylesheet (`styles.css` → `_ds_bundle.css`).
+Quiet, flat, light: near-black on white, cool grays, Geist (loaded from Google Fonts via `styles.css`; `--font-sans`), 8px grid, pill actions, no shadows. Every component emits the real brentbrooks.com markup and is styled by the site's own stylesheet (`styles.css` → `_ds_bundle.css`).
 
 ## Setup
 
