@@ -1,245 +1,383 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-type="software" data-radius="round" data-ground="sand" data-buttons="solid" data-motion>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Larder &amp; List — A test kitchen for your household</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Larder &amp; List: a shared grocery list and recipe app for two</title>
+<meta name="description" content="An iPhone and iPad app that keeps one grocery list on two phones, saves recipes from links and cookbook pages, and plans a dinner for each night. Free, with no ads.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://brentbrooks.com/larderandlist/">
+<meta property="og:title" content="Larder &amp; List: a shared grocery list and recipe app for two">
+<meta property="og:description" content="One grocery list on two phones, the recipes you cook and a dinner for each night. Free on iPhone and iPad.">
+<meta property="og:image" content="https://brentbrooks.com/larderandlist/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://brentbrooks.com/larderandlist/share.jpg">
+<link rel="canonical" href="https://brentbrooks.com/larderandlist/">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#fafaf7">
+<meta name="apple-itunes-app" content="app-id=6760602117">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=JetBrains+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #fafaf7; --p-surface: #ede9d1; --p-ink: #15140f; --p-muted: #63625c;
+  --p-accent: #24704f; --p-accent-ink: #fafaf7; --p-action: #24704f; --p-action-ink: #fafaf7;
+  --p-inv-bg: #15140f; --p-inv-surface: #22211c; --p-inv-ink: #fafaf7; --p-inv-muted: #9a9995;
+  --p-inv-accent: #24704f; --p-inv-accent-ink: #fafaf7; --p-inv-action: #24704f; --p-inv-action-ink: #fafaf7;
+  --font-display: "Newsreader", "New York", ui-serif, Georgia, serif;
+  --font-text: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.012em;
+  --display-tracking-xl: -0.018em;
+}
+</style>
+<link rel="stylesheet" href="assets/diagrams/diagram.css">
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="assets/moments/moments.js">
+<link rel="modulepreload" href="assets/moments/lib.js">
+<link rel="modulepreload" href="assets/moments/pinned-chapters/moment.js">
+<!-- page CSS: only what sits inside a visual (the logo's icon, the phones, the collage pieces) -->
+<style>
+  .nav__logo > img { width: 28px; height: 28px; border-radius: 7px; flex: none; }
+  /* the name's box trimmed to its capitals and baseline, so the icon centres on the letters, not the line box */
+  .nav__name { text-box: trim-both cap alphabetic; }
 
-    <meta name="description" content="A quiet cooking companion for households. Shared grocery lists over iCloud, recipes imported from the web or scanned from your cookbook. iOS.">
+  /* a phone: the client's real screenshot in a dark bezel (sections-library.md, Heroes: .device) */
+  .device { position: relative; background: #151410; padding: 2.6%; border-radius: 15% / 7%; box-shadow: 0 1px 2px rgb(21 20 15 / .14), 0 26px 50px -26px rgb(21 20 15 / .5); }
+  .device > img { display: block; width: 100%; height: auto; aspect-ratio: 920 / 2000; border-radius: 12.5% / 5.8%; }
 
-    <!-- Open Graph / social -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Larder &amp; List">
-    <meta property="og:description" content="A quiet cooking companion for households. Shared grocery lists, trusted recipes, scanned cookbooks. iOS.">
-    <meta property="og:url" content="https://brentbrooks.com/larderandlist/">
-    <meta property="og:image" content="https://brentbrooks.com/larderandlist/og.png">
-    <meta name="twitter:card" content="summary_large_image">
+  /* the hero collage: two phones and one small card per set, sized in % of the collage */
+  .ly-collage { container: collage / size; }
+  /* a phone keeps its true shape at every collage size: as wide as 40% of the collage or as 76% of its
+     height allows, whichever is less, its height from the screen's own 920:2000 */
+  .ly-collage__set { --pw: min(40cqw, 76cqh * .45); }
+  .ly-collage .pc-phone { width: var(--pw); height: auto; }
+  /* the pair sits round the collage's centre with a 12% gap, the card tucked under the first phone */
+  .ly-collage .pc-phone--a { left: calc(50% - 6cqw - var(--pw)); top: 4%; }
+  .ly-collage .pc-phone--b { left: calc(50% + 6cqw); top: 20%; }
+  .ly-collage .pc-card { left: calc(50% - 6cqw - var(--pw)); bottom: 4%; width: clamp(min(180px, 56cqw), var(--pw) * 1.2, 48cqw); }
+  /* a collage too short for a card beside two phones shows the phones alone */
+  @container collage (max-height: 320px) { .ly-collage .ly-piece.pc-card { display: none; } }
+  .ly-collage .pc-phone > img { height: auto; aspect-ratio: 920 / 2000; }
+  .ly-collage .pc-phone { background: #151410; border-radius: 6.4cqw; padding: 1.1cqw; box-shadow: 0 1px 2px rgb(21 20 15 / .14), 0 26px 50px -24px rgb(21 20 15 / .5); }
+  .ly-collage .pc-phone > img { border-radius: 5.4cqw; object-fit: cover; object-position: 50% 0; }
+  .ly-collage .pc-card { background: #fff; color: var(--ink); padding: 2.4cqw 3cqw; display: grid; gap: 1.4cqw; align-content: center; font: 500 max(13px, 2.1cqw)/1.25 var(--font-text); box-shadow: 0 1px 2px rgb(21 20 15 / .08), 0 16px 32px -20px rgb(21 20 15 / .35); }
+  .pc-card .lbl { color: var(--muted); font-weight: 500; }
+  .pc-card .chips { display: flex; flex-wrap: wrap; gap: 1cqw; }
+  .pc-card .chips span { background: #f1efe4; border-radius: 99px; padding: .5cqw 1.6cqw; font-weight: 500; }
+  .pc-card .marks { display: flex; gap: 2.2cqw; align-items: center; }
+  .pc-card .marks img { width: max(22px, 5.4cqw); height: max(22px, 5.4cqw); }
+  @media (max-width: 639px) { .pc-card .chips span:nth-child(n+5) { display: none; } }
 
-    <!-- Favicons — relative paths work under the /larderandlist/ subpath -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  /* Apple's own "Download on the App Store" badge (toolbox.marketingtools.apple.com), unaltered:
+     40px tall at least, a quarter of its height clear round it; the link lifts on hover and presses */
+  .store-badge { display: inline-flex; flex: none; border-radius: 10px; transition: transform 180ms cubic-bezier(.25, 1, .5, 1); }
+  .store-badge > img { display: block; height: var(--badge-h, 48px); width: auto; }
+  @media (hover: hover) { .store-badge:hover { transform: translateY(-1px); } }
+  .store-badge:active { transform: scale(.97); transition-duration: 90ms; }
+  .store-badge:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .store-badge--nav { --badge-h: 40px; }
+  .store-badge--hero { --badge-h: 60px; }
+  .store-badge--close { --badge-h: 64px; }
+  .store-badge--bar { --badge-h: 44px; justify-self: center; }
+  @media (max-width: 639px) { .store-badge--hero, .store-badge--close { --badge-h: 56px; } }
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Onest:wght@300;400;500;600&display=swap">
+  /* the hero's lead at the size of every other section's lead */
+  .hero--triptych .hero__lead { font-size: var(--t-lead); max-width: 34ch; }
+  /* #faq: the recipe library stands under the head, as tall as the answers beside it */
+  #faq .faq__head { display: flex; flex-direction: column; }
+  #faq .faq__shot { flex: 1 1 auto; min-height: 340px; margin-top: var(--s-5); }
+  @media (max-width: 639px) { #faq .faq__shot { flex: none; height: 56svh; min-height: 0; --m: var(--s-4); } }
+  /* phones: the questions follow their heading straight away; the recipe phone closes the section after the answers */
+  @media (max-width: 639px) {
+    #faq .faq__head { display: contents; }
+    #faq .faq__head > * { grid-column: 1 / -1; }
+    #faq .wrap > .grid { row-gap: 0; }
+    #faq .faq { margin-top: var(--s-5); }
+    #faq .faq__shot { order: 1; margin-top: var(--s-6); }
+  }
+  /* a tablet stacks the head over the answers with no room to spare: the screen stays out */
+  @media (min-width: 640px) and (max-width: 1023px) { #faq .faq__head > .faq__shot { display: none; } }
+  /* the hero is a split here (copy on span-4, collage on span-6), so its title takes the split hero's size */
+  .hero--triptych h1 { font-size: var(--ly-h1); line-height: 1.02; }
 
-    <link rel="stylesheet" href="styles.css">
+  /* #list: the sync diagram stands on the effect's quiet ground */
+  #list .frame[data-visual] { padding: var(--s-6); }
+  #list .frame[data-visual] > .dg { z-index: 1; width: 100%; }
+  #list .grid.fill > .frame { align-self: stretch; display: grid; align-content: center; }
+
+  /* a head row, then the frame that takes the rest of the screen */
+  .recipes__frame { margin-top: var(--s-7); }
+
+  /* a whole phone in its frame: the frame is a size container and the phone takes its height
+     (6px bezel, a 920:2000 screen), never wider than the frame leaves; nothing is cut */
+  #week .mo-pc__visual--lit, .timers__row > .frame, #faq .faq__shot { container-type: size; display: grid; place-items: center; padding: 0; --m: var(--s-6); }
+  #week .mo-pc__visual--lit > .device, .timers__row .device, #faq .faq__shot .device {
+    width: min(100cqw - 2 * var(--m), (100cqh - 2 * var(--m) - 12px) * .46 + 12px);
+    padding: 6px; border-radius: 13% / 6%; flex: none; }
+  #week .mo-pc__visual--lit > .device > img, .timers__row .device > img, #faq .faq__shot .device > img { border-radius: 11% / 5%; }
+  /* the kit's ratio spacer would be a grid row here and push the phone down */
+  #week .mo-pc__visual--lit::before, .timers__row > .frame::before, #faq .faq__shot::before { content: none; }
+
+  /* #week live: the shared frame is as tall as the stage leaves, so the phone stands full height */
+  #week.is-live .mo-pc__visual--lit { aspect-ratio: auto; }
+  #week.is-live .mo-pc__visuals { aspect-ratio: auto; height: min(calc(100svh - var(--nav, 72px) - 2 * var(--s-7)), 780px); max-height: none; }
+  /* #week at rest: a row per step from 640px, a stack on a phone; each frame has a set height */
+  #week:not(.is-live) .mo-pc__visual--lit { aspect-ratio: auto; height: clamp(300px, 42svh, 440px); }
+  /* a tablet at rest: two screens, taller frames to fill them */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    main > section#week:not(.is-live) { min-height: calc(2 * 100svh); }
+    #week:not(.is-live) .mo-pc__visual--lit { height: 46svh; }
+  }
+  @media (max-width: 639px) {
+    main > section#week { min-height: calc(2 * 100lvh); }
+    #week:not(.is-live) .mo-pc__visual--lit { height: 31svh; --m: var(--s-4); }
+  }
+
+  /* #timers: two lit frames edge to edge, a whole phone in each */
+  #timers { --g-screen: calc(var(--h, 1) * 100svh); align-content: stretch; }
+  @media (max-width: 639px) { #timers { --g-screen: calc(var(--h, 1) * 100lvh); } main > section#timers.section { padding-block: var(--s-7) calc(var(--s-7) + var(--bar, 0px)); } }
+  .timers__row { display: flex; gap: var(--gap, 24px); margin-top: var(--s-7); }
+  .timers__row > .frame { flex: 1 1 0; min-width: 0; }
+  /* tablets and up: the tall phone takes 5 columns, the wide Lock Screen slice 7, so neither floats in empty sand */
+  @media (min-width: 640px) { .timers__row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); column-gap: var(--gutter); }
+    .timers__row > .frame:has(.device) { grid-column: 1 / span 5; } .timers__row > .frame:has(.la-slice) { grid-column: 6 / span 7; } .timers__row > .frame > .la-slice { width: min(100cqw - 2 * var(--m), 680px); } }
+  @media (max-width: 639px) { .timers__row { gap: 12px; } .timers__row > .frame { --m: var(--s-3); } }
+  /* the Lock Screen timer, cut from the real screenshot round its Live Activity, as large as the frame allows */
+  .timers__row .la-slice { width: min(100cqw - 2 * var(--m), 560px); border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgb(21 20 15 / .14), 0 26px 50px -26px rgb(21 20 15 / .5); }
+  .timers__row .la-slice > img { display: block; width: 100%; height: auto; aspect-ratio: 920 / 440; }
+  /* phones: the wide Lock Screen slice was 139px in a half-width column; stack it under the phone at full width, its frame sized by the slice */
+  @media (max-width: 639px) {
+    .timers__row { flex-direction: column; }
+    .timers__row > .frame:has(.la-slice) { flex: none; container-type: inline-size; padding-block: var(--m); }
+    .timers__row .la-slice { border-radius: 16px; }
+  }
+
+  #faq .mo-cr { align-items: flex-start; }
+  #faq .mo-cr__col { height: 1.3em; }
+  #faq .mo-cr__ch { line-height: 1.3; }
+  #faq .mo-cr__strip { font-size: 1.3em; }
+  #faq .mo-cr__strip span { font-size: calc(1em / 1.3); height: 1.3em; line-height: 1.3; }
+
+  @media (min-width: 640px) and (max-width: 1023px) { .hero--triptych .hero__cta { justify-content: flex-start; } }
+  .ly-collage .pc-card { height: auto; }
+  /* the close: the words and the badge on the left, the app icon as it sits on a Home Screen on the right line */
+  .close__icon { display: none; }
+  /* phones: the close and its links share one screen */
+  @media (max-width: 639px) { main ~ footer.closing { padding-bottom: var(--s-7); } footer.closing > .wrap { row-gap: var(--s-6); } .closing__links { gap: var(--s-6); } .closing__cta { gap: var(--s-5); } }
+  @media (min-width: 640px) {
+    .closing__cta.close--type { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto 1fr; column-gap: var(--s-7); }
+    .closing__cta.close--type > .section-head, .closing__cta.close--type > .store-badge { grid-column: 1; }
+    .closing__cta.close--type > .store-badge { justify-self: start; }
+    .closing__cta.close--type h2 { font-size: clamp(44px, 5.6vw, 88px); line-height: 1.02; letter-spacing: -0.02em; max-width: 13ch; text-wrap: balance; }
+    .close__icon { display: block; grid-column: 2; grid-row: 1 / -1; align-self: start; width: clamp(160px, 17vw, 240px);
+                   border-radius: 22.4%; overflow: hidden; transition: transform 240ms cubic-bezier(.25, 1, .5, 1);
+                   box-shadow: 0 1px 2px rgb(21 20 15 / .10), 0 2px 6px -2px rgb(21 20 15 / .12), 0 40px 60px -36px rgb(21 20 15 / .45); outline: 1px solid rgb(21 20 15 / .07); outline-offset: -1px; }
+    .close__icon > img { display: block; width: 100%; height: auto; }
+    @media (hover: hover) { .close__icon:hover { transform: translateY(-2px); } }
+    .close__icon:active { transform: scale(.97); transition-duration: 90ms; }
+  }
+  /* the hero's button sits under its copy, on the text's left line */
+  .hero--triptych .span-4 > .hero__cta { justify-content: flex-start; margin-top: var(--s-6); }
+</style>
 </head>
 <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+<!-- type: software (an iPhone and iPad app; site-kind software)
+     deal: hero triptych, nav nav-centre, close close-type, footer footer-columns, rhythm surface-pairs (#week on .ground-surface),
+           buttons solid, mark wordmark (replaced by the client's app icon), radius round, ground sand,
+           grounds bg-mist (hero), bg-band (#timers), effect gradient-mesh in the one [data-visual] frame (#list),
+           palette: the client's own colours through start.mjs brand (#fafaf7 icon ground, #ede9d1 icon tile, #15140f cook-mode ink, #24704f the app's sage),
+           type Newsreader + DM Sans (JetBrains Mono in the kit diagrams)
+     moments: pinned-chapters in #week (the week from plan to cooking, one screen per step) -->
+<header class="nav nav--centre">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <a class="nav__logo" href="#top"><img src="img/app-icon-96.png" alt="" width="28" height="28"><span class="nav__name">Larder &amp; List</span></a>
+    <nav class="nav__links" aria-label="Main">
+      <div class="nav__item"><a class="nav__link" href="#list">List</a></div>
+      <div class="nav__item"><a class="nav__link" href="#recipes">Recipes</a></div>
+      <div class="nav__item"><a class="nav__link" href="#week">Week</a></div>
+      <div class="nav__item"><a class="nav__link" href="#timers">Timers</a></div>
+      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="store-badge store-badge--nav" href="https://apps.apple.com/us/app/larder-list/id6760602117"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40"></a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
 
-    <!-- Masthead -->
-    <header class="masthead" role="banner">
-        <div class="masthead__inner">
-            <a href="#" class="wordmark" aria-label="Larder and List, home">
-                <span>Larder</span><span class="amp">&amp;</span><span>List</span>
-            </a>
-            <nav class="masthead__nav" aria-label="Primary">
-                <a href="#features">Features</a>
-                <a href="#how">How it works</a>
-                <a href="#faq">FAQ</a>
-                <a href="#download" class="masthead__cta">Download</a>
-            </nav>
+<main id="top">
+  <section class="hero hero--triptych bg-mist" data-enter aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text grid hero__grid">
+      <div class="span-4">
+        <h1 id="hero-h">Tell Siri. It’s on the grocery list.</h1>
+        <p class="hero__lead">Say it or type it, and Siri with Apple Intelligence adds it, sorted by aisle. One list on one phone or two, beside your recipes and this week’s dinners. Free on iPhone and iPad with iOS 26.2 or later.</p>
+        <div class="hero__cta"><a class="store-badge store-badge--hero" href="https://apps.apple.com/us/app/larder-list/id6760602117"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40"></a></div>
+      </div>
+      <div class="ly-collage span-6 start-7" role="img" aria-label="Larder &amp; List on iPhone: the grocery list sorted by aisle, and Siri adding onions, tomatoes and granola to it">
+        <div class="ly-collage__set is-on">
+          <div class="ly-piece pc-phone pc-phone--a"><img src="img/list-400.webp" srcset="img/list-400.webp 400w, img/list-720.webp 720w" sizes="260px" alt="" fetchpriority="high" data-source="client" data-subject="the grocery list screen"></div>
+          <div class="ly-piece pc-phone pc-phone--b"><img src="img/siri-400.webp" srcset="img/siri-400.webp 400w, img/siri-720.webp 720w" sizes="260px" alt="" data-source="client" data-subject="Siri adding items to the list"></div>
+          <div class="ly-piece pc-card">
+            <span class="lbl">Sorted by aisle</span>
+            <span class="chips"><span>Produce</span><span>Dairy</span><span>Meat</span><span>Bakery</span><span>Pantry</span></span>
+          </div>
         </div>
-    </header>
+      </div>
+    </div></div>
+  </section>
 
-    <main id="main">
-
-        <!-- Hero -->
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero__grid">
-                <div class="hero__copy">
-                    <p class="overline">An iOS app · Beta</p>
-                    <h1 id="hero-title" class="display display--xxl">
-                        Keep a larder. Keep a list. <em>Cook from both.</em>
-                    </h1>
-                    <p class="lede">
-                        Larder <em class="amp">&amp;</em> List is a shared grocery list and recipe library for a household of two. Recipes come in from the web, your camera, or your own typing. Your list syncs between phones the moment either of you edits it.
-                    </p>
-                    <div class="hero__cta">
-                        <a href="#download" class="btn btn--primary">
-                            <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-                                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09l0-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                            </svg>
-                            Download on the App Store
-                        </a>
-                        <p class="cta-note">FREE · REQUIRES iOS 17 · UNIVERSAL</p>
-                    </div>
-                </div>
-
-                <div class="hero__mockup" aria-hidden="true">
-                    <!-- Real app icon, exported from the SwiftUI artwork.
-                         Tilted slightly so it reads as an object, not a spec. -->
-                    <img
-                        src="apple-touch-icon.png"
-                        alt=""
-                        class="hero__icon"
-                        width="360"
-                        height="360">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features -->
-        <section id="features" class="features reveal" aria-labelledby="features-title">
-            <div class="section__masthead">
-                <h2 id="features-title" class="section__label">What it remembers</h2>
-            </div>
-            <div class="features__grid">
-                <article class="feature">
-                    <div class="feature__number">№ 01</div>
-                    <h3 class="feature__title">A shared list, without the drama</h3>
-                    <p class="feature__body">
-                        Two phones, one list. Changes show up on your partner's phone the moment you type them, over iCloud. No accounts, no invitations past the first one. If the store is out of cilantro, they'll know before you come home.
-                    </p>
-                </article>
-
-                <article class="feature">
-                    <div class="feature__number">№ 02</div>
-                    <h3 class="feature__title">Recipes you actually cook</h3>
-                    <p class="feature__body">
-                        Paste a link from a food blog, scan a page of your favorite cookbook, or type one in. The app pulls ingredients and steps, sorts them like a magazine recipe card, and lets you tap any ingredient onto the grocery list.
-                    </p>
-                </article>
-
-                <article class="feature">
-                    <div class="feature__number">№ 03</div>
-                    <h3 class="feature__title">Aisle-sorted, always</h3>
-                    <p class="feature__body">
-                        Items group by where they live in the store — Produce, Dairy, Meat, Pantry — so you walk the aisles once. Tell the app once where something belongs, and it remembers for next time.
-                    </p>
-                </article>
-            </div>
-        </section>
-
-        <!-- How it works -->
-        <section id="how" class="how reveal" aria-labelledby="how-title">
-            <div class="section__masthead">
-                <h2 id="how-title" class="section__label">How it works</h2>
-                <p class="section__dek display--sm">Three short moves to get your household set up.</p>
-            </div>
-
-            <ol class="steps" role="list">
-                <li class="step">
-                    <div class="step__num"><em>01</em></div>
-                    <div class="step__body">
-                        <h3>Install on both phones.</h3>
-                        <p>Sign in with your existing iCloud accounts — no new accounts, no passwords. The app uses Apple's CloudKit, so your list is covered by the same privacy terms as your Notes.</p>
-                    </div>
-                </li>
-                <li class="step">
-                    <div class="step__num"><em>02</em></div>
-                    <div class="step__body">
-                        <h3>Share your household.</h3>
-                        <p>From Settings, tap Share Household. Send the invitation to your partner. Once they accept, your lists and recipes become one.</p>
-                    </div>
-                </li>
-                <li class="step">
-                    <div class="step__num"><em>03</em></div>
-                    <div class="step__body">
-                        <h3>Add recipes you already love.</h3>
-                        <p>Paste a URL from your favorite food blog, or hold your phone over a page of your cookbook. The app reads the page and files it alongside everything else.</p>
-                    </div>
-                </li>
-            </ol>
-        </section>
-
-        <!-- FAQ -->
-        <section id="faq" class="faq reveal" aria-labelledby="faq-title">
-            <div class="section__masthead">
-                <h2 id="faq-title" class="section__label">Questions</h2>
-            </div>
-
-            <dl class="faq__list">
-                <div class="faq__item">
-                    <dt>Is Larder &amp; List free?</dt>
-                    <dd>Yes, during beta. There are no ads, no analytics, and no subscription tier. A one-time purchase may arrive at 1.0 — we'll say clearly if it does.</dd>
-                </div>
-                <div class="faq__item">
-                    <dt>Does it work if only one of us has it?</dt>
-                    <dd>Of course. Household sharing is optional. You can use it as a solo grocery list and recipe library, and bring in a partner later.</dd>
-                </div>
-                <div class="faq__item">
-                    <dt>What happens if I paste a recipe URL and it fails?</dt>
-                    <dd>Older food blogs often don't embed the structured data modern recipe sites do. When that happens, the app offers to scan the page with your camera instead — the text lands on your phone the same way.</dd>
-                </div>
-                <div class="faq__item">
-                    <dt>Where is my data stored?</dt>
-                    <dd>In your iCloud private database. Your partner sees a shared copy through Apple's CloudKit sharing. Nobody else — including us — can read it.</dd>
-                </div>
-                <div class="faq__item">
-                    <dt>Does it work on iPad or Mac?</dt>
-                    <dd>It's an iOS app first. iPad works today in compatibility mode; a proper iPad layout and Mac Catalyst build are on the list for later.</dd>
-                </div>
-            </dl>
-        </section>
-
-        <!-- CTA -->
-        <section id="download" class="cta reveal" aria-labelledby="cta-title">
-            <hr class="rule rule--wide">
-            <h2 id="cta-title" class="display--xl">
-                Keep a larder <em class="amp">&amp;</em> a list.
-            </h2>
-            <p class="cta__sub">Start with today's grocery run.</p>
-            <a href="#" class="btn btn--primary btn--large">
-                <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.09l0-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                </svg>
-                Download on the App Store
-            </a>
-        </section>
-    </main>
-
-    <footer role="contentinfo">
-        <div class="footer__inner">
-            <div class="footer__col">
-                <p class="wordmark wordmark--sm">
-                    <span>Larder</span><span class="amp">&amp;</span><span>List</span>
-                </p>
-                <p class="footer__copy">© 2026 · Kept quietly, updated rarely.</p>
-            </div>
-            <nav class="footer__col" aria-label="Site">
-                <p class="footer__label">Site</p>
-                <a href="#features">Features</a>
-                <a href="#how">How it works</a>
-                <a href="#faq">FAQ</a>
-            </nav>
-            <nav class="footer__col" aria-label="Support">
-                <p class="footer__label">Support</p>
-                <a href="mailto:brent.brooks@gmail.com">Email us</a>
-                <a href="privacy.html">Privacy</a>
-            </nav>
-            <div class="footer__col footer__col--sign">
-                <p class="footer__mono">Made slowly · 2026</p>
-            </div>
+  <section class="section" id="list" style="--hm: 2" aria-labelledby="list-h">
+    <div class="wrap">
+      <div class="grid fill">
+        <div class="span-5 stack-4">
+          <h2 id="list-h">One grocery list on two phones. <span class="muted">Sorted by aisle.</span></h2>
+          <p class="t-lead">Add olive oil from the couch and it shows up on your partner’s phone in seconds, over iCloud. Tell Larder &amp; List where something belongs once and it remembers.</p>
+          <ul class="stack-2">
+            <li>Produce, Dairy, Meat, Bakery, Frozen, Pantry, Beverages, Household</li>
+            <li>Scan a barcode, or say “Add onions to Larder &amp; List”</li>
+            <li>On Apple Watch and in a Home Screen widget</li>
+          </ul>
+          <p><a class="link" href="#faq">See how to share a household</a></p>
         </div>
-    </footer>
+        <div class="frame frame--split span-6 start-7" data-visual data-fx="gradient-mesh" data-fx-seed="41" data-fx-palette='{"bg":"#e6dcc6","surface":"#efe8d9","ink":"#15140f","accent":"#e0a458"}' data-fx-params='{"speed":0.04,"calm":0.7,"calmX":0.5,"calmY":0.5}'>
+          <div class="dg" data-diagram><script type="application/json">{"layout": "sync", "motion": {"pulse": "none"}, "alt": "Olive oil, onions and granola added on your iPhone appear on your partner’s iPhone through iCloud.", "ground": "none", "left": {"label": "Your iPhone", "icon": "ui:smartphone", "meta": "List", "rows": [{"label": "Olive oil", "meta": "Pantry"}, {"label": "Onions", "meta": "Produce"}, {"label": "Granola", "meta": "Pantry"}]}, "link": {"label": "iCloud", "icon": "si:icloud"}, "right": {"label": "Partner’s iPhone", "icon": "ui:smartphone", "meta": "List", "rows": [{"label": "Olive oil", "meta": "Pantry"}, {"label": "Onions", "meta": "Produce"}, {"label": "Granola", "meta": "Pantry"}]}}</script></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Reveal-on-scroll observer.
-         Adds .is-visible to any .reveal element when 15% of it crosses into
-         view. Fallback: if JS is disabled or this script fails, the CSS
-         leaves everything at full opacity (see the @media reduced-motion
-         block). To be extra safe, we also promote every .reveal immediately
-         if IntersectionObserver is unavailable. -->
-    <script>
-        (function () {
-            var els = document.querySelectorAll('.reveal');
-            if (!('IntersectionObserver' in window)) {
-                els.forEach(function (el) { el.classList.add('is-visible'); });
-                return;
-            }
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-            els.forEach(function (el) { observer.observe(el); });
-        })();
-    </script>
+  <section class="section" id="recipes" aria-labelledby="recipes-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 id="recipes-h" class="span-5">Recipes from links, posts and pages</h2>
+        <div class="span-6 start-7 stack-4">
+          <p class="t-lead">Share a post from Instagram, TikTok, YouTube, Pinterest or Facebook, paste a food blog link, or photograph up to 10 cookbook pages. The ingredients, steps and photo come in.</p>
+          <p><a class="link" href="#week">See a week planned from them</a></p>
+        </div>
+      </div>
+      <div class="frame frame--lit fill recipes__frame">
+        <div class="dg" data-diagram='{"layout": "fanin", "size": "section", "alt": "Recipes come in from Instagram, TikTok, YouTube, Pinterest, Facebook, food blogs and photographed cookbook pages, and their ingredients go on the grocery list in one tap.", "sources": [{"label": "Instagram", "icon": "instagram", "sub": "Posts"}, {"label": "TikTok", "icon": "tiktok", "sub": "Videos"}, {"label": "YouTube", "icon": "youtube", "sub": "Videos"}, {"label": "Pinterest", "icon": "pinterest", "sub": "Pins"}, {"label": "Facebook", "icon": "facebook", "sub": "Posts"}, {"label": "Food blogs", "icon": "ui:link", "sub": "A pasted link"}, {"label": "Cookbooks", "icon": "ui:camera", "sub": "Up to 10 pages"}], "target": {"label": "Recipes", "icon": "ui:chef-hat"}, "then": {"label": "Grocery list", "icon": "ui:shopping-cart", "meta": "1 tap"}}'></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ground-surface" id="week" style="--h: 2" data-moment="pinned-chapters" aria-labelledby="week-h">
+    <div class="wrap mo-pc__grid">
+      <div class="mo-pc__text">
+        <h2 id="week-h">A dinner for each night of the week</h2>
+        <ol class="mo-pc__steps">
+          <li class="mo-pc__step">
+            <h3>Pick a dinner for each night</h3>
+            <p>Choose from your own recipes. “Goes with your week” suggests ones that share ingredients, and anything missing goes on the list in one tap.</p>
+            <figure class="mo-pc__visual mo-pc__visual--lit"><div class="device" role="img" aria-label="This week in Larder &amp; List: a dinner on four nights and 17 ingredients not on the list yet"><img src="img/week-400.webp" srcset="img/week-400.webp 400w, img/week-720.webp 720w" sizes="300px" alt="" loading="lazy" data-source="client" data-subject="this week’s dinners"></div></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>New in 1.9: Prep Day, the week’s prep in one go</h3>
+            <p>Prep Day gathers the make-ahead steps from every dinner, says what to pull out first and how long each thing keeps.</p>
+            <figure class="mo-pc__visual mo-pc__visual--lit"><div class="device" role="img" aria-label="Prep Day: what to pull out first and the first make-ahead step, which keeps 3 days"><img src="img/prep-day-400.webp" srcset="img/prep-day-400.webp 400w, img/prep-day-720.webp 720w" sizes="300px" alt="" loading="lazy" data-source="client" data-subject="Prep Day"></div></figure>
+          </li>
+          <li class="mo-pc__step">
+            <h3>New in 1.9: cook one step at a time</h3>
+            <p>Each step in big type with its own ingredients and amounts. Turn the phone sideways to keep them beside the step.</p>
+            <figure class="mo-pc__visual mo-pc__visual--lit"><div class="device" role="img" aria-label="Cook mode: step 1 of 8 with its onion, celery and carrot"><img src="img/cook-step-400.webp" srcset="img/cook-step-400.webp 400w, img/cook-step-720.webp 720w" sizes="300px" alt="" loading="lazy" data-source="client" data-subject="cook mode"></div></figure>
+          </li>
+        </ol>
+      </div>
+      <div class="mo-pc__visuals frame"></div>
+    </div>
+  </section>
+
+  <section class="section bg-band" id="timers" aria-labelledby="timers-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 id="timers-h" class="span-5">New in 1.9: timers you can read across the kitchen</h2>
+        <div class="span-6 start-7">
+          <p class="t-lead">A running timer fills the screen. Leave the app and it keeps counting on the Lock Screen and in the Dynamic Island, with +1 min, Pause and Stop.</p>
+        </div>
+      </div>
+      <div class="fill timers__row">
+        <div class="frame frame--lit"><div class="device" role="img" aria-label="A full-screen cook timer at 6:38 for charring tomatillos and peppers"><img src="img/timer-400.webp" srcset="img/timer-400.webp 400w, img/timer-720.webp 720w" sizes="300px" alt="" loading="lazy" data-source="client" data-subject="the full-screen timer"></div></div>
+        <div class="frame frame--lit"><div class="la-slice" role="img" aria-label="A running timer on the Lock Screen: Place tomatillos, Chicken Chili Verde, 9:32 left, with +1 min, Pause and Stop"><img src="img/live-activity-720.webp" srcset="img/live-activity-400.webp 400w, img/live-activity-720.webp 720w" sizes="(max-width: 639px) 330px, 680px" alt="" width="920" height="440" loading="lazy" data-source="client" data-subject="the timer on the Lock Screen"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="--hm: 2" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="grid">
+        <div class="span-5 stack-4 faq__head">
+          <h2 id="faq-h">Questions</h2>
+          <p class="t-lead muted">About the price, sharing and where your lists live.</p>
+          <p><a class="link" href="mailto:brent.brooks@gmail.com">Email support</a></p>
+          <div class="frame faq__shot"><div class="device" role="img" aria-label="The recipe library in Larder &amp; List, kept in your own iCloud"><img src="img/recipes-400.webp" srcset="img/recipes-400.webp 400w, img/recipes-720.webp 720w" sizes="240px" alt="" loading="lazy" data-source="client" data-subject="the recipe library"></div></div>
+        </div>
+        <div class="faq span-6 start-7">
+          <div class="faq__item"><h3>Do we both need the app?</h3><p>No, it works fully for one. To share, tap Share Household in Settings and send the iCloud invite.</p></div>
+          <div class="faq__item"><h3>What does the app cost?</h3><p>Nothing. No in-app purchases, no ads, no subscription.</p></div>
+          <div class="faq__item"><h3>My partner has an Android phone. Can we share?</h3><p>No. The app runs on iPhone and iPad only, so you each need one to share a list.</p></div>
+          <div class="faq__item"><h3>Who can see our lists and recipes?</h3><p>You and your partner. They live in your iCloud; the developer collects nothing.</p></div>
+          <div class="faq__item"><h3>Does the list work without a signal?</h3><p>Yes. It syncs when the phone is back online.</p></div>
+          <div class="faq__item"><h3>Which devices does the app run on?</h3><p>iPhone and iPad with iOS 26.2 or later. The Apple Watch app shows the list.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Put the list on both phones</h2>
+        <p>Free on iPhone and iPad with iOS 26.2 or later.</p>
+      </div>
+      <a class="store-badge store-badge--close" href="https://apps.apple.com/us/app/larder-list/id6760602117"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40"></a>
+      <a class="close__icon" href="https://apps.apple.com/us/app/larder-list/id6760602117" tabindex="-1" aria-hidden="true"><img src="img/app-icon-256.webp" srcset="img/app-icon-256.webp 256w, img/app-icon-512.webp 512w" sizes="240px" alt="" width="256" height="256" loading="lazy" data-source="client" data-subject="the app icon"></a>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-6 stack-4">
+          <a class="nav__logo" href="#top"><img src="img/app-icon-96.png" alt="" width="28" height="28"><span class="nav__name">Larder &amp; List</span></a>
+          <p class="footer__lede">A grocery list and recipe app for two.</p>
+        </div>
+        <div class="span-3 start-7 footer__col"><h3>The app</h3><ul><li><a href="#list">List</a></li><li><a href="#recipes">Recipes</a></li><li><a href="#week">Week</a></li><li><a href="#timers">Timers</a></li></ul></div>
+        <div class="span-3 start-10 footer__col"><h3>Help</h3><ul><li><a href="#faq">Questions</a></li><li><a href="mailto:brent.brooks@gmail.com">Email support</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Larder &amp; List &nbsp; <a href="privacy.html">Privacy</a></span>
+        <span class="t-small muted">Product names and logos are trademarks of their owners.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="actionbar" aria-label="Quick actions">
+  <a class="store-badge store-badge--bar" href="https://apps.apple.com/us/app/larder-list/id6760602117"><img src="img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40"></a>
+</nav>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
+<script type="module" src="assets/diagrams/mount.js"></script>
 </body>
 </html>
